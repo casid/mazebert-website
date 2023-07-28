@@ -1,0 +1,9 @@
+[{
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target": {
+    "namespace": "android_app",
+    "package_name": "air.com.mazebert.MazebertTD",
+    "sha256_cert_fingerprints":
+    ["96:3A:75:13:81:02:1E:5B:A7:99:74:B7:E6:7F:B4:E9:D5:A0:B5:09:39:B3:32:34:44:E6:85:73:00:F9:14:2E"]
+  }
+}]

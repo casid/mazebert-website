@@ -1,0 +1,13 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appID": "MV8CB9A535.com.mazebert.MazebertTD",
+        "paths": [
+          "/g/*"
+        ]
+      }
+    ]
+  }
+}
