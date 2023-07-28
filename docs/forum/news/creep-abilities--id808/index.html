@@ -1,0 +1,504 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="nofollow">
+        <meta name="language" content="en">
+        <title>Creep abilities</title>
+        <link rel="stylesheet" href="https://mazebert.com/assets/css/mazebert.css?t=1690563617">
+        <script src="https://mazebert.com/assets/js/jquery.min.js?t=1690563617"></script>
+    </head>
+
+    <body>
+        <header>
+            <nav class="navigation">
+                <a class="nav-brand" href="https://mazebert.com/">
+                    <img srcset="https://mazebert.com/assets/images/app-icon.png?t=1690563617, https://mazebert.com/assets/images/app-icon-2x.png?t=1690563617 2x" src="https://mazebert.com/assets/images/app-icon-2x.png?t=1690563617" class="app-icon" alt="Mazebert TD - Play your cards wisely to survive">
+                </a>
+                <div class="nav-mobile">
+                    <div id="nav-icon">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                    <span class="forum-badge badge"></span>
+                </div>
+                <div class="nav-menu">
+                    <a href="https://mazebert.com/news/" class="nav-item">News</a>
+                    <a href="https://mazebert.com/stats/" class="nav-item">Stats</a>
+                    <a href="https://mazebert.com/cards/" class="nav-item">Cards</a>
+                    <a href="https://mazebert.com/forum/" class="nav-item is-active">Forum<span class="forum-badge badge"></span></a>
+                    <a href="https://mazebert.com/ladder/" class="nav-item">Ladder</a>
+                    <a href="https://mazebert.com/credits/" class="nav-item">Credits</a>
+                    <a href="https://mazebert.com/reviews/" class="nav-item">Reviews</a>
+                </div>
+            </nav>
+        </header>
+
+        <main class="has-navbar-fixed-top">
+            <div class="container">
+                <nav class="breadcrumbs">
+                    <a href="https://mazebert.com/forum/">Forum</a>&nbsp;/
+                    <a href="https://mazebert.com/forum/news/">News</a>&nbsp;/
+                    <span>Creep abilities</span>
+                </nav>
+            </div>
+            
+
+    <div class="container">
+        
+<div class="post-content">
+    <div class="post-author first">
+        <div class="profile-picture">
+            <img class="shadow" alt="Andy" src="https://secure.gravatar.com/avatar/5bf536d27c50cc30a6945c1d63f48535?s=160&amp;d=retro&amp;r=g" height="80" width="80">
+            <div class="badge-wrapper">
+                <span class="level">43</span>
+                <img alt="Supporter Level 43" src="https://mazebert.com/assets/images/supporter-level-bg.png?t=1690563617" srcset="https://mazebert.com/assets/images/supporter-level-bg@2x.png?t=1690563617 2x">
+            </div>
+        </div>
+        <div class="profile-content">
+            <h4><a href="https://mazebert.com/player/115/">Andy</a></h4>
+            <h5 class="subtitle">
+                Level:&nbsp;109<br>
+                Rank:&nbsp;323<br/><br/>
+            </h5>
+        </div>
+        <div class="profile-more-content post-created" data-ts="1379761297">
+        </div>
+        <a href="https://mazebert.com/supporters/rag-nar-rog-supporter-pack/">
+            <img alt="Rag nar Rog Supporter" style="float: right;" src="https://mazebert.com/assets/images/rnr-supporter-badge.png?t=1690563617" srcset="https://mazebert.com/assets/images/rnr-supporter-badge@2x.png?t=1690563617 2x"/>
+        </a><br>
+        <a href="https://mazebert.com/supporters/rise-of-cthulhu-supporter-pack/">
+            <img alt="Rise of Cthulhu Supporter" style="float: right;" src="https://mazebert.com/assets/images/roc-supporter-badge.png?t=1690563617" srcset="https://mazebert.com/assets/images/roc-supporter-badge@2x.png?t=1690563617 2x"/>
+        </a><br>
+        <a href="https://mazebert.com/supporters/dawn-of-light-supporter-pack/">
+            <img alt="Dawn of Light Supporter" style="float: right;" src="https://mazebert.com/assets/images/dol-supporter-badge.png?t=1690563617" srcset="https://mazebert.com/assets/images/dol-supporter-badge@2x.png?t=1690563617 2x"/>
+        </a><br>
+    </div>
+
+    <h1>Creep abilities</h1>
+    <a id="4708"></a>
+
+    <span class="post-content-text">[latexpage]
+Creep abilities will make the next release even more interesting. Every wave of creeps can have up to two random abilities.
+
+[caption id="attachment_677" align="aligncenter" width="640"]<a href="https://mazebert.com/wp-content/uploads/2013/09/creep_abilities.png"><img src="https://mazebert.com/wp-content/uploads/2013/09/creep_abilities.png" alt="Creep abilities will be one of the main features of version 0.5" width="640" height="288" class="size-full wp-image-677" /></a> Creep abilities will be one of the main features of version 0.5[/caption]
+
+The following abilities are possible right now:
+
+<ul>
+	<li><b>Fast</b>: Creeps run 50% faster, but their health is reduced.</li>
+	<li><b>Slow</b>: Creeps run 33% slower, but their health is increased.</li>
+	<li><b>Wisom</b>: Creeps grant 60% more XP.</li>
+	<li><b>Rich</b>: Creeps grant 60% more gold.</li>
+	<li><b>Armor</b>: The armor of creeps is increased by 30.</li>
+</ul>
+
+For the armor ability to work, the concept of armor was finally added to the game. Basically, the armor of a creep is the current round of the game. So for instance, the first round will have an armor of 1, the second round and armor of 2 and so on. How much the armor protects a creep from receiving damage, is denoted by the following formula:
+
+\begin{equation} \label{eq:poly}
+   f(x)=min(0.0000125 * x^2, 0.8)
+\end{equation}
+
+The maximum protection, a creep can ever get from armor is 80% damage reduction. Right now the theoretical maximum would be a creep at round 200 with Armor, resulting in an armor value of 230, meaning 66.1% damage reduction. Armor won't affect the early gameplay very much, but for late game it will become more and more interesting.
+
+[caption id="attachment_691" align="aligncenter" width="480"]<a href="https://mazebert.com/wp-content/uploads/2013/09/function-graph1.png"><img src="https://mazebert.com/wp-content/uploads/2013/09/function-graph1.png" alt="The armor function used by the engine." width="480" height="401" class="size-full wp-image-691" /></a> The armor function used by the engine.[/caption]
+
+By the way, the game mechanics already accounted for <b>negative</b> armor as well! The formula is the same, but with negative armor the received damage of the creep will be <b>increased</b> instead. 
+
+This is a shout out for new towers and items with armor reduction effect :-)</span>
+
+    <button data-playerid="115" data-postid="4708" class="edit-post-button">Edit</button>
+</div>
+<hr/>
+
+        
+<div class="post-content">
+    <div class="post-author">
+        <div class="profile-picture">
+            <img class="shadow" alt="??????" src="https://secure.gravatar.com/avatar/db20b498fb8de7a9c8eb63f18de3b6e6?s=160&amp;d=retro&amp;r=g" height="80" width="80">
+        </div>
+        <div class="profile-content">
+            <h4>??????</h4>
+            <h5 class="subtitle">
+                Level:&nbsp;-<br>
+                Rank:&nbsp;-<br/><br/>
+            </h5>
+        </div>
+        <div class="profile-more-content post-created" data-ts="1379770287">
+        </div>
+    </div>
+
+    <a id="4993"></a>
+
+    <span class="post-content-text">Good afternoon Author. Your game will make big success. I am the big fan of the YouTD map for WC3.
+I from Russia, and here games from a line of TD are very popular. Problem only that 99% of 
+inhabitants of our country don't know English. It would be good to include Russian support in settings.
+I offer you assistance in translation of Mazebert TD into Russian. Tell me your opinion about it.</span>
+
+    <button data-playerid="0" data-postid="4993" class="edit-post-button">Edit</button>
+</div>
+<hr/>
+
+        
+<div class="post-content">
+    <div class="post-author">
+        <div class="profile-picture">
+            <img class="shadow" alt="Andy" src="https://secure.gravatar.com/avatar/5bf536d27c50cc30a6945c1d63f48535?s=160&amp;d=retro&amp;r=g" height="80" width="80">
+            <div class="badge-wrapper">
+                <span class="level">43</span>
+                <img alt="Supporter Level 43" src="https://mazebert.com/assets/images/supporter-level-bg.png?t=1690563617" srcset="https://mazebert.com/assets/images/supporter-level-bg@2x.png?t=1690563617 2x">
+            </div>
+        </div>
+        <div class="profile-content">
+            <h4><a href="https://mazebert.com/player/115/">Andy</a></h4>
+            <h5 class="subtitle">
+                Level:&nbsp;109<br>
+                Rank:&nbsp;323<br/><br/>
+            </h5>
+        </div>
+        <div class="profile-more-content post-created" data-ts="1379868972">
+        </div>
+        <a href="https://mazebert.com/supporters/rag-nar-rog-supporter-pack/">
+            <img alt="Rag nar Rog Supporter" style="float: right;" src="https://mazebert.com/assets/images/rnr-supporter-badge.png?t=1690563617" srcset="https://mazebert.com/assets/images/rnr-supporter-badge@2x.png?t=1690563617 2x"/>
+        </a><br>
+        <a href="https://mazebert.com/supporters/rise-of-cthulhu-supporter-pack/">
+            <img alt="Rise of Cthulhu Supporter" style="float: right;" src="https://mazebert.com/assets/images/roc-supporter-badge.png?t=1690563617" srcset="https://mazebert.com/assets/images/roc-supporter-badge@2x.png?t=1690563617 2x"/>
+        </a><br>
+        <a href="https://mazebert.com/supporters/dawn-of-light-supporter-pack/">
+            <img alt="Dawn of Light Supporter" style="float: right;" src="https://mazebert.com/assets/images/dol-supporter-badge.png?t=1690563617" srcset="https://mazebert.com/assets/images/dol-supporter-badge@2x.png?t=1690563617 2x"/>
+        </a><br>
+    </div>
+
+    <a id="4994"></a>
+
+    <span class="post-content-text">Hi, thanks for the heads up!
+
+That's a really great offer. Unfortunately, right now the game has no multi-language support. For the alpha releases I spared the localization effort so far, to develop as fast as possible and add the localization feature as one of the last bits, when all parts are 99% ready for a beta release.
+
+When the time is right, may I come back to your offer?
+
+Cheers,
+Andy</span>
+
+    <button data-playerid="115" data-postid="4994" class="edit-post-button">Edit</button>
+</div>
+<hr/>
+
+        
+<div class="post-content">
+    <div class="post-author">
+        <div class="profile-picture">
+            <img class="shadow" alt="??????" src="https://secure.gravatar.com/avatar/db20b498fb8de7a9c8eb63f18de3b6e6?s=160&amp;d=retro&amp;r=g" height="80" width="80">
+        </div>
+        <div class="profile-content">
+            <h4>??????</h4>
+            <h5 class="subtitle">
+                Level:&nbsp;-<br>
+                Rank:&nbsp;-<br/><br/>
+            </h5>
+        </div>
+        <div class="profile-more-content post-created" data-ts="1379917364">
+        </div>
+    </div>
+
+    <a id="4995"></a>
+
+    <span class="post-content-text">Yes of course</span>
+
+    <button data-playerid="0" data-postid="4995" class="edit-post-button">Edit</button>
+</div>
+<hr/>
+
+        
+<div class="post-content">
+    <div class="post-author">
+        <div class="profile-picture">
+            <img class="shadow" alt="Rahler" src="https://secure.gravatar.com/avatar/16459bdd9838f4bdddf0cf08c3b0de31?s=160&amp;d=retro&amp;r=g" height="80" width="80">
+        </div>
+        <div class="profile-content">
+            <h4>Rahler</h4>
+            <h5 class="subtitle">
+                Level:&nbsp;-<br>
+                Rank:&nbsp;-<br/><br/>
+            </h5>
+        </div>
+        <div class="profile-more-content post-created" data-ts="1392171316">
+        </div>
+    </div>
+
+    <a id="5115"></a>
+
+    <span class="post-content-text">Is this still how the damage reduction for armor is calculated? If so, wouldn't the armor reduction aura from the witch not mean anything after ~wave 370?</span>
+
+    <button data-playerid="0" data-postid="5115" class="edit-post-button">Edit</button>
+</div>
+<hr/>
+
+        
+<div class="post-content">
+    <div class="post-author">
+        <div class="profile-picture">
+            <img class="shadow" alt="Andy" src="https://secure.gravatar.com/avatar/5bf536d27c50cc30a6945c1d63f48535?s=160&amp;d=retro&amp;r=g" height="80" width="80">
+            <div class="badge-wrapper">
+                <span class="level">43</span>
+                <img alt="Supporter Level 43" src="https://mazebert.com/assets/images/supporter-level-bg.png?t=1690563617" srcset="https://mazebert.com/assets/images/supporter-level-bg@2x.png?t=1690563617 2x">
+            </div>
+        </div>
+        <div class="profile-content">
+            <h4><a href="https://mazebert.com/player/115/">Andy</a></h4>
+            <h5 class="subtitle">
+                Level:&nbsp;109<br>
+                Rank:&nbsp;323<br/><br/>
+            </h5>
+        </div>
+        <div class="profile-more-content post-created" data-ts="1392189684">
+        </div>
+        <a href="https://mazebert.com/supporters/rag-nar-rog-supporter-pack/">
+            <img alt="Rag nar Rog Supporter" style="float: right;" src="https://mazebert.com/assets/images/rnr-supporter-badge.png?t=1690563617" srcset="https://mazebert.com/assets/images/rnr-supporter-badge@2x.png?t=1690563617 2x"/>
+        </a><br>
+        <a href="https://mazebert.com/supporters/rise-of-cthulhu-supporter-pack/">
+            <img alt="Rise of Cthulhu Supporter" style="float: right;" src="https://mazebert.com/assets/images/roc-supporter-badge.png?t=1690563617" srcset="https://mazebert.com/assets/images/roc-supporter-badge@2x.png?t=1690563617 2x"/>
+        </a><br>
+        <a href="https://mazebert.com/supporters/dawn-of-light-supporter-pack/">
+            <img alt="Dawn of Light Supporter" style="float: right;" src="https://mazebert.com/assets/images/dol-supporter-badge.png?t=1690563617" srcset="https://mazebert.com/assets/images/dol-supporter-badge@2x.png?t=1690563617 2x"/>
+        </a><br>
+    </div>
+
+    <a id="5116"></a><a id="latest"></a>
+
+    <span class="post-content-text">It's still like that, yes!
+
+You're right about the witch, yes.</span>
+
+    <button data-playerid="115" data-postid="5116" class="edit-post-button">Edit</button>
+</div>
+<hr/>
+
+    </div>
+
+    <script>
+    var formatTimeDelta = {
+        ONE_MINUTE: 60,
+        ONE_HOUR: 3600,
+        ONE_DAY: 86400,
+        ONE_MONTH: 2592000,
+        ONE_YEAR: 31536000,
+
+        formatTimeValueSuffix: function (value, unit, suffix) {
+            value = Math.floor(value);
+            if (value < 1 || value > 1) {
+                unit += "s";
+            }
+            return value + " " + unit + suffix;
+        },
+
+        formatTimeValue: function (value, unit) {
+            return this.formatTimeValueSuffix(value, unit, " ago");
+        },
+
+        formatYears: function (delta) {
+            return this.formatTimeValue(delta / this.ONE_YEAR, "year");
+        },
+
+        formatMonths: function (delta) {
+            return this.formatTimeValue(delta / this.ONE_MONTH, "month");
+        },
+
+        formatDays: function (delta) {
+            return this.formatTimeValue(delta / this.ONE_DAY, "day");
+        },
+
+        formatHours: function (delta) {
+            return this.formatTimeValue(delta / this.ONE_HOUR, "hour");
+        },
+
+        formatMinutes: function (delta) {
+            return this.formatTimeValue(delta / this.ONE_MINUTE, "minute");
+        },
+
+        formatSeconds: function (delta) {
+            return this.formatTimeValue(delta, "second");
+        },
+
+        formatDelta: function (delta) {
+            if (delta <= 0) {
+                return 'now';
+            }
+
+            if (delta < this.ONE_MINUTE) return this.formatSeconds(delta);
+            if (delta < this.ONE_HOUR) return this.formatMinutes(delta);
+            if (delta < this.ONE_DAY) return this.formatHours(delta);
+            if (delta < this.ONE_MONTH) return this.formatDays(delta);
+            if (delta < this.ONE_YEAR) return this.formatMonths(delta);
+            return this.formatYears(delta);
+        },
+
+        formatDeltaVerbose: function(delta) {
+            if (delta < 0) {
+                delta = 0;
+            }
+
+            return this.formatTimeValueSuffix(delta / this.ONE_DAY, 'day', ', ') +
+                   this.formatTimeValueSuffix((delta % this.ONE_DAY) / this.ONE_HOUR, 'hour', ', ') +
+                   this.formatTimeValueSuffix((delta % this.ONE_HOUR) / this.ONE_MINUTE, 'minute', ', ') +
+                   this.formatTimeValueSuffix(Math.floor(delta) % this.ONE_MINUTE, 'second', '');
+        },
+
+        formatElement: function($element) {
+            var delta = (Date.now() / 1000) - $element.data('ts');
+            $element.html(this.formatDelta(delta));
+
+            return delta;
+        },
+
+        format: function($selector) {
+            var that = this;
+            var elementsToRefresh = [];
+
+            $selector.each(function() {
+                var delta = that.formatElement($(this));
+
+                if (delta < that.ONE_HOUR) {
+                    elementsToRefresh[elementsToRefresh.length] = $(this);
+                }
+            });
+
+            if (elementsToRefresh.length > 0) {
+                setInterval(function(){
+                    for (var i = 0; i < elementsToRefresh.length; ++i) {
+                        that.formatElement(elementsToRefresh[i]);
+                    }
+                }, 1000);
+            }
+        },
+    }
+</script>
+    <script>
+        $(document).ready(function() {
+            formatTimeDelta.format($('.post-created'));
+        });
+    </script>
+
+            <div id="card-preview" style="position: absolute; display: none; top: 0; left: 0;">
+    <img src="" srcset="" alt="Preview" />
+</div>
+
+<script>
+$(document).ready(function() {
+    var CardInfo = function() {
+        this.id = 0;
+        this.type = null;
+    };
+
+    var CardPreview = function() {
+
+        this.calculateCardTypePrefix = function(type) {
+            if (type === 'hero') return 'heroes/golden/Hero';
+            if (type === 'tower') return 'towers/golden/Tower';
+            if (type === 'item') return 'items/golden/Item';
+            if (type === 'potion') return 'potions/golden/Potion';
+            return '';
+        };
+
+        this.calculateImagePath = function(cardInfo) {
+            var path = 'https://mazebert.com/wp-content/themes/twentytwelve/images/';
+            path += this.calculateCardTypePrefix(cardInfo.type);
+            path += '-' + cardInfo.id + '-card-preview.png';
+
+            return path;
+        };
+
+        this.calculateImagePath2x = function(cardInfo) {
+            var path = 'https://mazebert.com/wp-content/themes/twentytwelve/images/';
+            path += this.calculateCardTypePrefix(cardInfo.type);
+            path += '-' + cardInfo.id + '-card.png';
+
+            return path;
+        };
+
+        this.show = function(cardInfo) {
+            var image = $('#card-preview img');
+            image.attr('src', this.calculateImagePath(cardInfo));
+            image.attr('srcset', this.calculateImagePath2x(cardInfo) + " 2x");
+            $('#card-preview').show();
+        };
+
+        this.hide = function() {
+            $('#card-preview').hide();
+        };
+
+        this.update = function(x, y) {
+            var offsetX = 60;
+            if (x > $(document).width() / 2) {
+                offsetX = -320 - 30;
+            }
+            $('#card-preview').css('left', x + offsetX).css('top', y - 212);
+        };
+    };
+
+    var CardInfoParser = function() {
+
+        this.parseCssInfo = function(cssClass, classPrefix, defaultValue) {
+            if (cssClass.indexOf(classPrefix) === 0) {
+                return cssClass.substr(classPrefix.length);
+            } else {
+                return defaultValue;
+            }
+        };
+
+        this.parseCardInfo = function(classes) {
+            var cardInfo = new CardInfo();
+            classes = classes.split(' ');
+
+            for (var i = 0, length = classes.length; i < length; ++i) {
+                cardInfo.id = this.parseCssInfo(classes[i], 'card-id-', cardInfo.id);
+                cardInfo.type = this.parseCssInfo(classes[i], 'card-type-', cardInfo.type);
+            }
+
+            return cardInfo;
+        };
+    };
+
+    var cardPreview = new CardPreview();
+    var cardInfoParser = new CardInfoParser();
+
+    $('span.card-info').mouseenter(function() {
+        var classes = $(this).attr('class');
+        cardPreview.show(cardInfoParser.parseCardInfo(classes));
+    }).mouseleave(function() {
+        cardPreview.hide();
+    }).mousemove(function(event) {
+        var relX = event.pageX;
+        var relY = event.pageY;
+
+        cardPreview.update(relX, relY);
+    });
+});
+</script>
+        </main>
+
+        <footer class="footer">
+            <div class="content has-text-centered">
+                <p>
+                    <strong>Mazebert TD</strong> by Andreas Hager.<br/>
+                    <a href="https://mazebert.com/privacy-policy/">Privacy</a>. <a href="https://mazebert.com/legal-notice/">Legal notice</a>.
+                </p>
+            </div>
+        </footer>
+
+        <script>
+            $(document).ready(function() {
+                $('.nav-mobile').click(function(){
+                    $('#nav-icon').toggleClass('open');
+                    $('.nav-menu').toggleClass('open');
+                });
+            });
+        </script>
+
+    </body>
+</html>
+

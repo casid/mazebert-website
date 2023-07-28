@@ -1,0 +1,714 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="nofollow">
+        <meta name="language" content="en">
+        <title>How to build a search from scratch with Apache Lucene</title>
+        <link rel="stylesheet" href="https://mazebert.com/assets/css/mazebert.css?t=1690563617">
+        <script src="https://mazebert.com/assets/js/jquery.min.js?t=1690563617"></script>
+    </head>
+
+    <body>
+        <header>
+            <nav class="navigation">
+                <a class="nav-brand" href="https://mazebert.com/">
+                    <img srcset="https://mazebert.com/assets/images/app-icon.png?t=1690563617, https://mazebert.com/assets/images/app-icon-2x.png?t=1690563617 2x" src="https://mazebert.com/assets/images/app-icon-2x.png?t=1690563617" class="app-icon" alt="Mazebert TD - Play your cards wisely to survive">
+                </a>
+                <div class="nav-mobile">
+                    <div id="nav-icon">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                    <span class="forum-badge badge"></span>
+                </div>
+                <div class="nav-menu">
+                    <a href="https://mazebert.com/news/" class="nav-item">News</a>
+                    <a href="https://mazebert.com/stats/" class="nav-item">Stats</a>
+                    <a href="https://mazebert.com/cards/" class="nav-item">Cards</a>
+                    <a href="https://mazebert.com/forum/" class="nav-item is-active">Forum<span class="forum-badge badge"></span></a>
+                    <a href="https://mazebert.com/ladder/" class="nav-item">Ladder</a>
+                    <a href="https://mazebert.com/credits/" class="nav-item">Credits</a>
+                    <a href="https://mazebert.com/reviews/" class="nav-item">Reviews</a>
+                </div>
+            </nav>
+        </header>
+
+        <main class="has-navbar-fixed-top">
+            <div class="container">
+                <nav class="breadcrumbs">
+                    <a href="https://mazebert.com/forum/">Forum</a>&nbsp;/
+                    <a href="https://mazebert.com/forum/news/">News</a>&nbsp;/
+                    <span>How to build a search from scratch with Apache Lucene</span>
+                </nav>
+            </div>
+            
+
+    <div class="container">
+        
+<div class="post-content">
+    <div class="post-author first">
+        <div class="profile-picture">
+            <img class="shadow" alt="Andy" src="https://secure.gravatar.com/avatar/5bf536d27c50cc30a6945c1d63f48535?s=160&amp;d=retro&amp;r=g" height="80" width="80">
+            <div class="badge-wrapper">
+                <span class="level">43</span>
+                <img alt="Supporter Level 43" src="https://mazebert.com/assets/images/supporter-level-bg.png?t=1690563617" srcset="https://mazebert.com/assets/images/supporter-level-bg@2x.png?t=1690563617 2x">
+            </div>
+        </div>
+        <div class="profile-content">
+            <h4><a href="https://mazebert.com/player/115/">Andy</a></h4>
+            <h5 class="subtitle">
+                Level:&nbsp;109<br>
+                Rank:&nbsp;323<br/><br/>
+            </h5>
+        </div>
+        <div class="profile-more-content post-created" data-ts="1564810536">
+        </div>
+        <a href="https://mazebert.com/supporters/rag-nar-rog-supporter-pack/">
+            <img alt="Rag nar Rog Supporter" style="float: right;" src="https://mazebert.com/assets/images/rnr-supporter-badge.png?t=1690563617" srcset="https://mazebert.com/assets/images/rnr-supporter-badge@2x.png?t=1690563617 2x"/>
+        </a><br>
+        <a href="https://mazebert.com/supporters/rise-of-cthulhu-supporter-pack/">
+            <img alt="Rise of Cthulhu Supporter" style="float: right;" src="https://mazebert.com/assets/images/roc-supporter-badge.png?t=1690563617" srcset="https://mazebert.com/assets/images/roc-supporter-badge@2x.png?t=1690563617 2x"/>
+        </a><br>
+        <a href="https://mazebert.com/supporters/dawn-of-light-supporter-pack/">
+            <img alt="Dawn of Light Supporter" style="float: right;" src="https://mazebert.com/assets/images/dol-supporter-badge.png?t=1690563617" srcset="https://mazebert.com/assets/images/dol-supporter-badge@2x.png?t=1690563617 2x"/>
+        </a><br>
+    </div>
+
+    <h1>How to build a search from scratch with Apache Lucene</h1>
+    <a id="6606"></a>
+
+    <span class="post-content-text">The last two days I've been playing with <a href="https://lucene.apache.org/">Apache Lucene</a>. And you can now <a href="https://mazebert.com/forum/">search the forum</a>.
+
+<h2>Getting started</h2>There are a few things I've learned about Lucene these days. It wasn't easy for me to figure out how to get started with the framework, so I'm writing down my experience while the memory is still fresh. 
+
+I started with this <a href="https://github.com/apache/lucene-solr/blob/master/lucene/core/src/test/org/apache/lucene/TestDemo.java">Unit Test demo</a> in the official Lucene repository. And from there I read a lot of internal Lucene code. And I have to say it is one of the most beautifuly framework code I've read. It's written with a lot of care, clear focus on performance and great Javadoc about the reasons behind the code where necessary.
+
+Before you start coding, you'd need to add the following dependencies:
+
+<pre class="hljs">
+<span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">groupid</span>&gt;</span>org.apache.lucene<span class="hljs-tag">&lt;/<span class="hljs-name">groupid</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">artifactid</span>&gt;</span>lucene-core<span class="hljs-tag">&lt;/<span class="hljs-name">artifactid</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>8.2.0<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">groupid</span>&gt;</span>org.apache.lucene<span class="hljs-tag">&lt;/<span class="hljs-name">groupid</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">artifactid</span>&gt;</span>lucene-queryparser<span class="hljs-tag">&lt;/<span class="hljs-name">artifactid</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>8.2.0<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">groupid</span>&gt;</span>org.apache.lucene<span class="hljs-tag">&lt;/<span class="hljs-name">groupid</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">artifactid</span>&gt;</span>lucene-highlighter<span class="hljs-tag">&lt;/<span class="hljs-name">artifactid</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>8.2.0<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span>
+</pre>
+Let's start by writing a first test. Since creating a Lucene index is time consuming it makes sense to use one index during the entire test.
+
+<pre class="hljs">
+<span class="hljs-meta">@Execution</span>(ExecutionMode.SAME_THREAD)
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">LuceneForumSearchGatewayTest</span> </span>{
+
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> Path indexPath;
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> LuceneForumSearchGateway searchGateway;
+
+    <span class="hljs-meta">@BeforeAll</span>
+    <span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">beforeAll</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> IOException </span>{
+        indexPath = Files.createTempDirectory(<span class="hljs-string">"tempIndex"</span>);
+        searchGateway = <span class="hljs-keyword">new</span> LuceneForumSearchGateway(indexPath);
+    }
+}
+</pre>
+We create a temporary directory where Lucene can create and store the index and then we create the class we want to test. Wait, that one does not exist yet, so we have a production class to create! 
+
+<pre class="hljs">
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">LuceneForumSearchGateway</span> </span>{
+
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> Directory directory;
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> Analyzer analyzer;
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> IndexWriter indexWriter;
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> SearcherManager searcherManager;
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">LuceneForumSearchGateway</span><span class="hljs-params">(Path indexPath)</span> <span class="hljs-keyword">throws</span> IOException </span>{
+        directory = FSDirectory.open(indexPath);
+        analyzer = <span class="hljs-keyword">new</span> StandardAnalyzer();
+        indexWriter = <span class="hljs-keyword">new</span> IndexWriter(directory, <span class="hljs-keyword">new</span> IndexWriterConfig(analyzer));
+        searcherManager = <span class="hljs-keyword">new</span> SearcherManager(indexWriter, <span class="hljs-keyword">null</span>);
+    }
+}
+</pre>
+There are four instances created here. First, Lucene needs a directory, that's where the search index will be created. There are different implementations, thus <i>Directory</i> is an abstract class. What we want to have is a file system directory. <i>FSDirectory.open()</i> is a utility method to create a file system directory instance that is best suited for the current platform. On a 64bit Linux server this will result in an <i>MMapDirectory</i>, a directory using memory mapped files and one of the reason why Lucene is so insanely fast.
+
+Next instance is an <i>Analyzer</i> which is extracting token streams for text. What this basically does is taking a text like "Ben and Jerry!" and extracts the terms "Ben", "Jerry" for the index. The word "and" is a stop word and thus removed as well as "!". Luckily all texts on this forum are English, so we just create a <i>StandardAnalyzer</i>.
+
+The <i>IndexWriter</i> is used to add documents to the index (in our case forum posts). It is quite expensive to open, but luckily once opened it is thread safe, so I keep this one instance open during the entire lifetime of the application.
+
+And finally, there is the <i>SearcherManager</i>, a helper class to search the index on multiple threads, without interfering with each other or the IndexWriter.
+
+We created a lot of expensive stuff, so we need to dispose of it when we are done! Let's add this tear down method to the test:
+
+<pre class="hljs">
+<span class="hljs-meta">@AfterAll</span>
+<span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">afterAll</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> IOException </span>{
+    searchGateway.dispose();
+    IOUtils.rm(indexPath);
+}
+</pre>
+And implement the method in production code. Note that we are good citizens and close all the above instances in the reverse order we created them.
+
+<pre class="hljs">
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">dispose</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> IOException </span>{
+    searcherManager.close();
+    indexWriter.close();
+    analyzer.close();
+    directory.close();
+}
+</pre>
+<h2>Adding documents</h2>Now it's time to write the first real test! For the setup, we need some documents to search.
+
+<pre class="hljs">
+<span class="hljs-meta">@Test</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">search</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> IOException </span>{
+    searchGateway.add(<span class="hljs-keyword">new</span> ForumSearchEntry(<span class="hljs-number">1</span>, <span class="hljs-string">"Hello World"</span>));
+    searchGateway.add(<span class="hljs-keyword">new</span> ForumSearchEntry(<span class="hljs-number">2</span>, <span class="hljs-string">"We have a new tower"</span>));
+}
+</pre>
+Lucene is organizing its index with so called documents. For the outside world we don't want to know about these internal details, so let's create a POJO for it, after all we want to search forum posts!
+
+<pre class="hljs">
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ForumSearchEntry</span> </span>{
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">long</span> postId;
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> String content;
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">ForumSearchEntry</span><span class="hljs-params">(<span class="hljs-keyword">long</span> postId, String content)</span> </span>{
+        <span class="hljs-keyword">this</span>.postId = postId;
+        <span class="hljs-keyword">this</span>.content = content;
+    }
+}
+</pre>
+Now we can implement the add method:
+
+<pre class="hljs">
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">add</span><span class="hljs-params">(ForumSearchEntry entry)</span> <span class="hljs-keyword">throws</span> IOException </span>{
+    Document document = createDocument(entry);
+    indexWriter.addDocument(document);
+}
+
+<span class="hljs-function"><span class="hljs-keyword">private</span> Document <span class="hljs-title">createDocument</span><span class="hljs-params">(ForumSearchEntry entry)</span> </span>{
+    Document document = <span class="hljs-keyword">new</span> Document();
+
+    document.add(<span class="hljs-keyword">new</span> TextField(<span class="hljs-string">"content"</span>, entry.content, Store.YES));
+    document.add(<span class="hljs-keyword">new</span> StoredField(<span class="hljs-string">"postId"</span>, entry.postId));
+    <span class="hljs-keyword">return</span> document;
+}
+</pre>
+Quite straight forward so far! We create a document, create a TextField with the post content and a StoredField for the post identifier. Note that we need to store the content, because we're want to highlight the results later on. Okay, it is time to write our first assertion. Let's see how many documents we have in the index now.
+
+<pre class="hljs">
+<span class="hljs-meta">@Test</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">search</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> IOException </span>{
+    searchGateway.add(<span class="hljs-keyword">new</span> ForumSearchEntry(<span class="hljs-number">1</span>, <span class="hljs-string">"Hello World"</span>));
+    searchGateway.add(<span class="hljs-keyword">new</span> ForumSearchEntry(<span class="hljs-number">2</span>, <span class="hljs-string">"We have a new tower"</span>));
+
+    assertThat(searchGateway.getCount()).isEqualTo(<span class="hljs-number">2</span>);
+}
+</pre>
+Let's add this missing getCount() method...
+
+<pre class="hljs">
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">getCount</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-keyword">try</span> {
+        IndexSearcher indexSearcher = searcherManager.acquire();
+        <span class="hljs-keyword">try</span> {
+            <span class="hljs-keyword">return</span> indexSearcher.getIndexReader().numDocs();
+        } <span class="hljs-keyword">finally</span> {
+            searcherManager.release(indexSearcher);
+        }
+    } <span class="hljs-keyword">catch</span> (IOException e) {
+        logger.error(<span class="hljs-string">"Failed to determine lucene document count."</span>, e);
+        <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+    }
+}
+</pre>
+Okay, let's explain what's going on here. Remember the searcherManager? It allows to aquire an <i>IndexSearcher</i> in a thread-safe and still very fast way. We first aquire the searcher, then we use it and we release the searcher when we are done with in the finally block (even if an exception is thrown). In this case we simply ask for the total document count in the index.
+
+Time to run that test! And... The test is red. Expected 2, got 0.
+
+So what's going on there? Lucene does not write documents instantly to the index unless you commit them. So let's adjust our test:
+
+<pre class="hljs">
+<span class="hljs-meta">@Test</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">search</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> IOException </span>{
+    searchGateway.add(<span class="hljs-keyword">new</span> ForumSearchEntry(<span class="hljs-number">1</span>, <span class="hljs-string">"Hello World"</span>));
+    searchGateway.add(<span class="hljs-keyword">new</span> ForumSearchEntry(<span class="hljs-number">2</span>, <span class="hljs-string">"We have a new tower"</span>));
+    searchGateway.commit();
+
+    assertThat(searchGateway.getCount()).isEqualTo(<span class="hljs-number">2</span>);
+}
+</pre>
+And implement the commit method like so (we call commit on the <i>IndexWriter</i> and we also ask the searcherManager for a refresh):
+
+<pre class="hljs">
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">commit</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> IOException </span>{
+    indexWriter.commit();
+    searcherManager.maybeRefresh();
+}
+</pre>
+Now the test is green, we have two documents in the index! 
+
+<h2>Searching documents</h2>So far this is not very impressive, I know. Let's go ahead and search some stuff!
+
+<pre class="hljs">
+<span class="hljs-meta">@Test</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">search</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> IOException </span>{
+    searchGateway.add(<span class="hljs-keyword">new</span> ForumSearchEntry(<span class="hljs-number">1</span>, <span class="hljs-string">"Hello World"</span>));
+    searchGateway.add(<span class="hljs-keyword">new</span> ForumSearchEntry(<span class="hljs-number">2</span>, <span class="hljs-string">"We have a new tower"</span>));
+    searchGateway.commit();
+
+    assertThat(searchGateway.getCount()).isEqualTo(<span class="hljs-number">2</span>);
+    assertSearchResult(<span class="hljs-string">"hello"</span>, <span class="hljs-keyword">new</span> ForumSearchEntry(<span class="hljs-number">1</span>, <span class="hljs-string">"&lt;b&gt;Hello&lt;/b&gt; World"</span>));
+}
+
+<span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">assertSearchResult</span><span class="hljs-params">(String query, ForumSearchEntry... expected)</span> </span>{
+    ForumSearchEntry[] results = searchGateway.search(query, <span class="hljs-number">10</span>);
+    assertThat(results.length).isEqualTo(expected.length);
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; results.length; ++i) {
+        assertThat(results[i].postId).isEqualTo(expected[i].postId);
+        assertThat(results[i].content).isEqualTo(expected[i].content);
+    }
+}
+</pre>
+And here is the search method:
+
+<pre class="hljs">
+<span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> ForumSearchEntry[] NO_RESULT = {};
+
+<span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> Formatter formatter = <span class="hljs-keyword">new</span> SimpleHTMLFormatter(<span class="hljs-string">"&lt;b&gt;"</span>, <span class="hljs-string">"&lt;/b&gt;"</span>);
+
+<span class="hljs-keyword">public</span> ForumSearchEntry[] search(String query, <span class="hljs-keyword">int</span> limit) {
+    <span class="hljs-keyword">try</span> {
+        IndexSearcher indexSearcher = searcherManager.acquire();
+        <span class="hljs-keyword">try</span> {
+            SimpleQueryParser queryParser = <span class="hljs-keyword">new</span> SimpleQueryParser(analyzer, <span class="hljs-string">"content"</span>);
+
+            Query luceneQuery = queryParser.parse(query);
+            TopDocs topDocs = indexSearcher.search(luceneQuery, limit);
+
+            <span class="hljs-keyword">int</span> count = topDocs.scoreDocs.length;
+            <span class="hljs-keyword">if</span> (count == <span class="hljs-number">0</span>) {
+                <span class="hljs-keyword">return</span> NO_RESULT;
+            }
+
+            QueryScorer scorer = <span class="hljs-keyword">new</span> QueryScorer(luceneQuery);
+
+            Highlighter highlighter = <span class="hljs-keyword">new</span> Highlighter(formatter, scorer);
+            highlighter.setTextFragmenter(<span class="hljs-keyword">new</span> SimpleSpanFragmenter(scorer));
+
+            ForumSearchEntry[] result = <span class="hljs-keyword">new</span> ForumSearchEntry[count];
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; count; ++i) {
+                <span class="hljs-keyword">int</span> documentId = topDocs.scoreDocs[i].doc;
+                Document document = indexSearcher.doc(documentId);
+
+                <span class="hljs-keyword">long</span> postId = (Long)document.getField(<span class="hljs-string">"postId"</span>).numericValue()
+                String content = document.get(<span class="hljs-string">"content"</span>);
+
+                TokenStream stream = TokenSources.getAnyTokenStream(indexSearcher.getIndexReader(), documentId, <span class="hljs-string">"content"</span>, analyzer);
+
+                <span class="hljs-keyword">try</span> {
+                    content = highlighter.getBestFragments(stream, content, <span class="hljs-number">5</span>, <span class="hljs-string">"..."</span>);
+                } <span class="hljs-keyword">catch</span> (InvalidTokenOffsetsException e) {
+                    logger.warn(<span class="hljs-string">"Failed to highlight content fragments, will use entire content"</span>);
+                }
+
+                result[i] = <span class="hljs-keyword">new</span> ForumSearchEntry(postId, content);
+            }
+
+            <span class="hljs-keyword">return</span> result;
+        } <span class="hljs-keyword">finally</span> {
+            searcherManager.release(indexSearcher);
+        }
+    } <span class="hljs-keyword">catch</span> (IOException e) {
+        logger.error(<span class="hljs-string">"Failed to search lucene index. Query: "</span> + query, e);
+        <span class="hljs-keyword">return</span> NO_RESULT;
+    }
+}
+</pre>
+Let's go through the method step by step. First we aquire a <i>IndexSearcher</i> the same way we did before. Just make sure to release it properly in the finally block! Since we're dealing with a search string entered by a human being, we use the <i>SimpleQueryParser</i> to parse it. We can then perform a search via the <i>IndexSearcher</i>. If not documents are found, we can return right there with an empty result. If not, we initialize a <i>Highlighter</i> to mark the relevant sections in the content. For every document found, we obtain a <i>TokenStream</i> for the content and then pass it to the highlighter to mark the relevant sections. In our case they are simply wrapped in bold tags. Then we turn the document back to our <i>ForumSearchEntry</i> POJO.
+
+If all went well, our test is now green!
+
+<h2>Updating documents</h2>What happens if a post is edited? Right now, if we simply add a new document, we end up with another document, the old one is not removed. Let's write a test to see if this is true:
+
+<pre class="hljs">
+<span class="hljs-meta">@Test</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">update</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> IOException </span>{
+    searchGateway.add(<span class="hljs-keyword">new</span> ForumSearchEntry(<span class="hljs-number">1</span>, <span class="hljs-string">"Hello World"</span>));
+    searchGateway.commit();
+
+    searchGateway.add(<span class="hljs-keyword">new</span> ForumSearchEntry(<span class="hljs-number">1</span>, <span class="hljs-string">"Hello World2"</span>));
+    searchGateway.commit();
+
+    assertSearchResult(<span class="hljs-string">"world2"</span>, <span class="hljs-keyword">new</span> ForumSearchEntry(<span class="hljs-number">1</span>, <span class="hljs-string">"Hello &lt;b&gt;World2&lt;/b&gt;"</span>));
+    assertThat(searchGateway.getCount()).isEqualTo(<span class="hljs-number">1</span>);
+}
+</pre>
+The probleme right now is, that lucene does not know about postId being our primary key. So let's rename the add() method to update(), since that's what the application will use. Here is the update method implementation:
+
+<pre class="hljs">
+<span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> FieldType ID_TYPE;
+
+<span class="hljs-keyword">static</span> {
+    ID_TYPE = <span class="hljs-keyword">new</span> FieldType();
+    ID_TYPE.setIndexOptions(IndexOptions.DOCS);
+    ID_TYPE.setTokenized(<span class="hljs-keyword">true</span>);
+    ID_TYPE.freeze();
+}
+
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">update</span><span class="hljs-params">(ForumSearchEntry entry)</span> <span class="hljs-keyword">throws</span> IOException </span>{
+    indexWriter.updateDocument(byId(entry.postId), createDocument(entry));
+}
+
+<span class="hljs-function"><span class="hljs-keyword">private</span> Term <span class="hljs-title">byId</span><span class="hljs-params">(<span class="hljs-keyword">long</span> postId)</span> </span>{
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> Term(<span class="hljs-string">"postIdLookup"</span>, longToBytesRef(postId));
+}
+
+<span class="hljs-function"><span class="hljs-keyword">private</span> Document <span class="hljs-title">createDocument</span><span class="hljs-params">(ForumSearchEntry entry)</span> </span>{
+    Document document = <span class="hljs-keyword">new</span> Document();
+
+    BytesRef idBytes = longToBytesRef(entry.postId);
+
+    document.add(<span class="hljs-keyword">new</span> Field(<span class="hljs-string">"postIdLookup"</span>, <span class="hljs-keyword">new</span> BinaryTokenStream(idBytes), ID_TYPE));
+    document.add(<span class="hljs-keyword">new</span> TextField(<span class="hljs-string">"content"</span>, entry.content, Store.YES));
+    document.add(<span class="hljs-keyword">new</span> StoredField(<span class="hljs-string">"postId"</span>, idBytes));
+
+    <span class="hljs-keyword">return</span> document;
+}
+
+<span class="hljs-function"><span class="hljs-keyword">private</span> BytesRef <span class="hljs-title">longToBytesRef</span><span class="hljs-params">(<span class="hljs-keyword">long</span> value)</span> </span>{
+    BytesRef bytesRef = <span class="hljs-keyword">new</span> BytesRef(<span class="hljs-number">8</span>);
+    bytesRef.length = <span class="hljs-number">8</span>;
+    NumericUtils.longToSortableBytes(value, bytesRef.bytes, <span class="hljs-number">0</span>);
+    <span class="hljs-keyword">return</span> bytesRef;
+}
+
+<span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">long</span> <span class="hljs-title">bytesRefToLong</span><span class="hljs-params">(BytesRef bytesRef)</span> </span>{
+    <span class="hljs-keyword">return</span> NumericUtils.sortableBytesToLong(bytesRef.bytes, <span class="hljs-number">0</span>);
+}
+</pre>
+Next to the stored postId field we need another one that can be indexed. For that we need to add the ID (a long) as binary tokenized data to the index. Simply converting the long to binary is not very efficient for the way Lucene works, fortunately there is a helper class to deal with that: <i>NumericUtils</i>. We also need to define a new <i>FieldType</i> for this to work. Finally we can then pass a term to the update document method, which ensures that the postId is unique!
+
+<h2>Using the gateway</h2>That's it, we've written a basic search using Apache Lucene. I'd recommend to create an interface like this to use it. That way Lucene is nicely separated from the rest of the application:
+<pre class="hljs">
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">ForumSearchGateway</span> </span>{
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">update</span><span class="hljs-params">(ForumSearchEntry entry)</span> <span class="hljs-keyword">throws</span> IOException</span>;
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">delete</span><span class="hljs-params">(<span class="hljs-keyword">long</span> postId)</span> <span class="hljs-keyword">throws</span> IOException</span>;
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">commit</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> IOException</span>;
+    ForumSearchEntry[] search(String query, <span class="hljs-keyword">int</span> limit);
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">getCount</span><span class="hljs-params">()</span></span>;
+}
+</pre>
+In my case, whenever a post is created, edited or deleted I'm calling the appropriate method on the gateway. On application startup I'm comparing the amount of posts in the DB with the amount of documents in the index and decide if I need to do a re-index or not on a background thread. When the user is searching stuff, I'm calling search. Your application might have other needs, but you get the idea.
+
+<h2>Final thoughts</h2>Apache Lucene is a powerful search engine! For a simple search like I wanted to do, it is a perfect fit. You don't necessarily need the complexity of administrating another server instance running solr or elasticsearch. The search on this site is completing queries in about 2ms to 50ms, without the need to access the database. 
+
+Disclaimer: I'm no Lucene expert, only because this is working on my little website, doesn't mean this is the perfect way to go for all scenarios. Also, if you <i>are</i> a Lucene expert and you notice me doing something weird, I'm happy for any feedback. The comments section in this forum is for players of the game only, but you can drop me an email anytime at andy [at] mazebert.com.</span>
+
+    <button data-playerid="115" data-postid="6606" class="edit-post-button">Edit</button>
+</div>
+<hr/>
+
+        
+<div class="post-content">
+    <div class="post-author">
+        <div class="profile-picture">
+            <img class="shadow" alt="HerbertBert" src="https://secure.gravatar.com/avatar/4c588f319ac440dea17c264e92c0c26c?s=160&amp;d=retro&amp;r=g" height="80" width="80">
+            <div class="badge-wrapper">
+                <span class="level">3</span>
+                <img alt="Supporter Level 3" src="https://mazebert.com/assets/images/supporter-level-bg.png?t=1690563617" srcset="https://mazebert.com/assets/images/supporter-level-bg@2x.png?t=1690563617 2x">
+            </div>
+        </div>
+        <div class="profile-content">
+            <h4><a href="https://mazebert.com/player/15426/">HerbertBert</a></h4>
+            <h5 class="subtitle">
+                Level:&nbsp;92<br>
+                Rank:&nbsp;872<br/><br/>
+            </h5>
+        </div>
+        <div class="profile-more-content post-created" data-ts="1564852144">
+        </div>
+    </div>
+
+    <a id="6609"></a>
+
+    <span class="post-content-text">very nice blog post - I have been tinkering a bit with Lucene too - but I didn't get as far as you. So thanks for your shared experience :-)</span>
+
+    <button data-playerid="15426" data-postid="6609" class="edit-post-button">Edit</button>
+</div>
+<hr/>
+
+        
+<div class="post-content">
+    <div class="post-author">
+        <div class="profile-picture">
+            <img class="shadow" alt="Andy" src="https://secure.gravatar.com/avatar/5bf536d27c50cc30a6945c1d63f48535?s=160&amp;d=retro&amp;r=g" height="80" width="80">
+            <div class="badge-wrapper">
+                <span class="level">43</span>
+                <img alt="Supporter Level 43" src="https://mazebert.com/assets/images/supporter-level-bg.png?t=1690563617" srcset="https://mazebert.com/assets/images/supporter-level-bg@2x.png?t=1690563617 2x">
+            </div>
+        </div>
+        <div class="profile-content">
+            <h4><a href="https://mazebert.com/player/115/">Andy</a></h4>
+            <h5 class="subtitle">
+                Level:&nbsp;109<br>
+                Rank:&nbsp;323<br/><br/>
+            </h5>
+        </div>
+        <div class="profile-more-content post-created" data-ts="1564853267">
+        </div>
+        <a href="https://mazebert.com/supporters/rag-nar-rog-supporter-pack/">
+            <img alt="Rag nar Rog Supporter" style="float: right;" src="https://mazebert.com/assets/images/rnr-supporter-badge.png?t=1690563617" srcset="https://mazebert.com/assets/images/rnr-supporter-badge@2x.png?t=1690563617 2x"/>
+        </a><br>
+        <a href="https://mazebert.com/supporters/rise-of-cthulhu-supporter-pack/">
+            <img alt="Rise of Cthulhu Supporter" style="float: right;" src="https://mazebert.com/assets/images/roc-supporter-badge.png?t=1690563617" srcset="https://mazebert.com/assets/images/roc-supporter-badge@2x.png?t=1690563617 2x"/>
+        </a><br>
+        <a href="https://mazebert.com/supporters/dawn-of-light-supporter-pack/">
+            <img alt="Dawn of Light Supporter" style="float: right;" src="https://mazebert.com/assets/images/dol-supporter-badge.png?t=1690563617" srcset="https://mazebert.com/assets/images/dol-supporter-badge@2x.png?t=1690563617 2x"/>
+        </a><br>
+    </div>
+
+    <a id="6610"></a><a id="latest"></a>
+
+    <span class="post-content-text">Thanks @HerbertBert!</span>
+
+    <button data-playerid="115" data-postid="6610" class="edit-post-button">Edit</button>
+</div>
+<hr/>
+
+    </div>
+
+    <script>
+    var formatTimeDelta = {
+        ONE_MINUTE: 60,
+        ONE_HOUR: 3600,
+        ONE_DAY: 86400,
+        ONE_MONTH: 2592000,
+        ONE_YEAR: 31536000,
+
+        formatTimeValueSuffix: function (value, unit, suffix) {
+            value = Math.floor(value);
+            if (value < 1 || value > 1) {
+                unit += "s";
+            }
+            return value + " " + unit + suffix;
+        },
+
+        formatTimeValue: function (value, unit) {
+            return this.formatTimeValueSuffix(value, unit, " ago");
+        },
+
+        formatYears: function (delta) {
+            return this.formatTimeValue(delta / this.ONE_YEAR, "year");
+        },
+
+        formatMonths: function (delta) {
+            return this.formatTimeValue(delta / this.ONE_MONTH, "month");
+        },
+
+        formatDays: function (delta) {
+            return this.formatTimeValue(delta / this.ONE_DAY, "day");
+        },
+
+        formatHours: function (delta) {
+            return this.formatTimeValue(delta / this.ONE_HOUR, "hour");
+        },
+
+        formatMinutes: function (delta) {
+            return this.formatTimeValue(delta / this.ONE_MINUTE, "minute");
+        },
+
+        formatSeconds: function (delta) {
+            return this.formatTimeValue(delta, "second");
+        },
+
+        formatDelta: function (delta) {
+            if (delta <= 0) {
+                return 'now';
+            }
+
+            if (delta < this.ONE_MINUTE) return this.formatSeconds(delta);
+            if (delta < this.ONE_HOUR) return this.formatMinutes(delta);
+            if (delta < this.ONE_DAY) return this.formatHours(delta);
+            if (delta < this.ONE_MONTH) return this.formatDays(delta);
+            if (delta < this.ONE_YEAR) return this.formatMonths(delta);
+            return this.formatYears(delta);
+        },
+
+        formatDeltaVerbose: function(delta) {
+            if (delta < 0) {
+                delta = 0;
+            }
+
+            return this.formatTimeValueSuffix(delta / this.ONE_DAY, 'day', ', ') +
+                   this.formatTimeValueSuffix((delta % this.ONE_DAY) / this.ONE_HOUR, 'hour', ', ') +
+                   this.formatTimeValueSuffix((delta % this.ONE_HOUR) / this.ONE_MINUTE, 'minute', ', ') +
+                   this.formatTimeValueSuffix(Math.floor(delta) % this.ONE_MINUTE, 'second', '');
+        },
+
+        formatElement: function($element) {
+            var delta = (Date.now() / 1000) - $element.data('ts');
+            $element.html(this.formatDelta(delta));
+
+            return delta;
+        },
+
+        format: function($selector) {
+            var that = this;
+            var elementsToRefresh = [];
+
+            $selector.each(function() {
+                var delta = that.formatElement($(this));
+
+                if (delta < that.ONE_HOUR) {
+                    elementsToRefresh[elementsToRefresh.length] = $(this);
+                }
+            });
+
+            if (elementsToRefresh.length > 0) {
+                setInterval(function(){
+                    for (var i = 0; i < elementsToRefresh.length; ++i) {
+                        that.formatElement(elementsToRefresh[i]);
+                    }
+                }, 1000);
+            }
+        },
+    }
+</script>
+    <script>
+        $(document).ready(function() {
+            formatTimeDelta.format($('.post-created'));
+        });
+    </script>
+
+            <div id="card-preview" style="position: absolute; display: none; top: 0; left: 0;">
+    <img src="" srcset="" alt="Preview" />
+</div>
+
+<script>
+$(document).ready(function() {
+    var CardInfo = function() {
+        this.id = 0;
+        this.type = null;
+    };
+
+    var CardPreview = function() {
+
+        this.calculateCardTypePrefix = function(type) {
+            if (type === 'hero') return 'heroes/golden/Hero';
+            if (type === 'tower') return 'towers/golden/Tower';
+            if (type === 'item') return 'items/golden/Item';
+            if (type === 'potion') return 'potions/golden/Potion';
+            return '';
+        };
+
+        this.calculateImagePath = function(cardInfo) {
+            var path = 'https://mazebert.com/wp-content/themes/twentytwelve/images/';
+            path += this.calculateCardTypePrefix(cardInfo.type);
+            path += '-' + cardInfo.id + '-card-preview.png';
+
+            return path;
+        };
+
+        this.calculateImagePath2x = function(cardInfo) {
+            var path = 'https://mazebert.com/wp-content/themes/twentytwelve/images/';
+            path += this.calculateCardTypePrefix(cardInfo.type);
+            path += '-' + cardInfo.id + '-card.png';
+
+            return path;
+        };
+
+        this.show = function(cardInfo) {
+            var image = $('#card-preview img');
+            image.attr('src', this.calculateImagePath(cardInfo));
+            image.attr('srcset', this.calculateImagePath2x(cardInfo) + " 2x");
+            $('#card-preview').show();
+        };
+
+        this.hide = function() {
+            $('#card-preview').hide();
+        };
+
+        this.update = function(x, y) {
+            var offsetX = 60;
+            if (x > $(document).width() / 2) {
+                offsetX = -320 - 30;
+            }
+            $('#card-preview').css('left', x + offsetX).css('top', y - 212);
+        };
+    };
+
+    var CardInfoParser = function() {
+
+        this.parseCssInfo = function(cssClass, classPrefix, defaultValue) {
+            if (cssClass.indexOf(classPrefix) === 0) {
+                return cssClass.substr(classPrefix.length);
+            } else {
+                return defaultValue;
+            }
+        };
+
+        this.parseCardInfo = function(classes) {
+            var cardInfo = new CardInfo();
+            classes = classes.split(' ');
+
+            for (var i = 0, length = classes.length; i < length; ++i) {
+                cardInfo.id = this.parseCssInfo(classes[i], 'card-id-', cardInfo.id);
+                cardInfo.type = this.parseCssInfo(classes[i], 'card-type-', cardInfo.type);
+            }
+
+            return cardInfo;
+        };
+    };
+
+    var cardPreview = new CardPreview();
+    var cardInfoParser = new CardInfoParser();
+
+    $('span.card-info').mouseenter(function() {
+        var classes = $(this).attr('class');
+        cardPreview.show(cardInfoParser.parseCardInfo(classes));
+    }).mouseleave(function() {
+        cardPreview.hide();
+    }).mousemove(function(event) {
+        var relX = event.pageX;
+        var relY = event.pageY;
+
+        cardPreview.update(relX, relY);
+    });
+});
+</script>
+        </main>
+
+        <footer class="footer">
+            <div class="content has-text-centered">
+                <p>
+                    <strong>Mazebert TD</strong> by Andreas Hager.<br/>
+                    <a href="https://mazebert.com/privacy-policy/">Privacy</a>. <a href="https://mazebert.com/legal-notice/">Legal notice</a>.
+                </p>
+            </div>
+        </footer>
+
+        <script>
+            $(document).ready(function() {
+                $('.nav-mobile').click(function(){
+                    $('#nav-icon').toggleClass('open');
+                    $('.nav-menu').toggleClass('open');
+                });
+            });
+        </script>
+
+    </body>
+</html>
+

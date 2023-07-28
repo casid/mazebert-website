@@ -1,0 +1,455 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="nofollow">
+        <meta name="language" content="en">
+        <title>Tracking down dsync errors in a deterministic game simulation</title>
+        <link rel="stylesheet" href="https://mazebert.com/assets/css/mazebert.css?t=1690563617">
+        <script src="https://mazebert.com/assets/js/jquery.min.js?t=1690563617"></script>
+    </head>
+
+    <body>
+        <header>
+            <nav class="navigation">
+                <a class="nav-brand" href="https://mazebert.com/">
+                    <img srcset="https://mazebert.com/assets/images/app-icon.png?t=1690563617, https://mazebert.com/assets/images/app-icon-2x.png?t=1690563617 2x" src="https://mazebert.com/assets/images/app-icon-2x.png?t=1690563617" class="app-icon" alt="Mazebert TD - Play your cards wisely to survive">
+                </a>
+                <div class="nav-mobile">
+                    <div id="nav-icon">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                    <span class="forum-badge badge"></span>
+                </div>
+                <div class="nav-menu">
+                    <a href="https://mazebert.com/news/" class="nav-item">News</a>
+                    <a href="https://mazebert.com/stats/" class="nav-item">Stats</a>
+                    <a href="https://mazebert.com/cards/" class="nav-item">Cards</a>
+                    <a href="https://mazebert.com/forum/" class="nav-item is-active">Forum<span class="forum-badge badge"></span></a>
+                    <a href="https://mazebert.com/ladder/" class="nav-item">Ladder</a>
+                    <a href="https://mazebert.com/credits/" class="nav-item">Credits</a>
+                    <a href="https://mazebert.com/reviews/" class="nav-item">Reviews</a>
+                </div>
+            </nav>
+        </header>
+
+        <main class="has-navbar-fixed-top">
+            <div class="container">
+                <nav class="breadcrumbs">
+                    <a href="https://mazebert.com/forum/">Forum</a>&nbsp;/
+                    <a href="https://mazebert.com/forum/news/">News</a>&nbsp;/
+                    <span>Tracking down dsync errors in a deterministic game simulation</span>
+                </nav>
+            </div>
+            
+
+    <div class="container">
+        
+<div class="post-content">
+    <div class="post-author first">
+        <div class="profile-picture">
+            <img class="shadow" alt="Andy" src="https://secure.gravatar.com/avatar/5bf536d27c50cc30a6945c1d63f48535?s=160&amp;d=retro&amp;r=g" height="80" width="80">
+            <div class="badge-wrapper">
+                <span class="level">43</span>
+                <img alt="Supporter Level 43" src="https://mazebert.com/assets/images/supporter-level-bg.png?t=1690563617" srcset="https://mazebert.com/assets/images/supporter-level-bg@2x.png?t=1690563617 2x">
+            </div>
+        </div>
+        <div class="profile-content">
+            <h4><a href="https://mazebert.com/player/115/">Andy</a></h4>
+            <h5 class="subtitle">
+                Level:&nbsp;109<br>
+                Rank:&nbsp;323<br/><br/>
+            </h5>
+        </div>
+        <div class="profile-more-content post-created" data-ts="1558827121">
+        </div>
+        <a href="https://mazebert.com/supporters/rag-nar-rog-supporter-pack/">
+            <img alt="Rag nar Rog Supporter" style="float: right;" src="https://mazebert.com/assets/images/rnr-supporter-badge.png?t=1690563617" srcset="https://mazebert.com/assets/images/rnr-supporter-badge@2x.png?t=1690563617 2x"/>
+        </a><br>
+        <a href="https://mazebert.com/supporters/rise-of-cthulhu-supporter-pack/">
+            <img alt="Rise of Cthulhu Supporter" style="float: right;" src="https://mazebert.com/assets/images/roc-supporter-badge.png?t=1690563617" srcset="https://mazebert.com/assets/images/roc-supporter-badge@2x.png?t=1690563617 2x"/>
+        </a><br>
+        <a href="https://mazebert.com/supporters/dawn-of-light-supporter-pack/">
+            <img alt="Dawn of Light Supporter" style="float: right;" src="https://mazebert.com/assets/images/dol-supporter-badge.png?t=1690563617" srcset="https://mazebert.com/assets/images/dol-supporter-badge@2x.png?t=1690563617 2x"/>
+        </a><br>
+    </div>
+
+    <h1>Tracking down dsync errors in a deterministic game simulation</h1>
+    <a id="6311"></a><a id="latest"></a>
+
+    <span class="post-content-text">The last few weeks I tried to fix dsync errors in Mazebert TD.
+
+So what's a dsync anyways? Mazebert TD is a <i>deterministic simulation</i>. This means a savegame contains all player actions and if the simulation executes those actions the outcome should always be exactly the same. And by exactly I mean <i>every bit</i> must be the same, every turn.
+
+When you load a game, the simulation starts from scratch and then applies all actions you did so far. That's why long games take longer to load.
+
+It also enables multiplayer games, since only the player actions need to be sent over the network. And finally, it allows to automatically replay and validate games that you submitted to the Mazebert server. This was the original idea: If someone is using CheatEngine or similar stuff to tinker with the game, the server detects a dsync and rejects the submitted game.
+
+But a dsync error also happens when the simulation returns different results for the same save game on different devices. As I'm writing these lines, this is what happened to about 22 of 14,715 submitted games so far. So it happened in ~0.15% of all games. When it happened it was very late-game, mostly hours into the game have passed. And players who reported this were certainly not cheating. I felt terribly sorry for them, putting so much effort into a single run, just to be rejected by the server!
+
+So I went on to fix it. Well, shit. There I was, having no idea what was causing the problems. I was super careful about dsyncs when I implemented the simulation. I have a unit test in place to ensure that all classes use the <code>strictfp</code> modifier, that guarantees same floating point results on all platforms. I was using only <code>StrictMath</code>. All random code ran through my own carefully seeded <code>RandomPlugin</code>. On my MacBook, on my PC, on my server, on my iPhone and on my two Android devices I always got the same results even in games that took hours or days. I was completly clueless what was going wrong.
+
+You might ask yourself, how the simulation even knew there was a dsync happening. For every simulated turn the simulation calculates a hash of the entire game state and stores it in the save game. Kind of like a blockchain, but with a much simpler and faster hash. Each turn the simulation can then compare its own hash with the one in the save game. And if it does not match, we get the dreaded dsync:
+<pre class="hljs">
+<span class="hljs-keyword">if</span> (replayFrame.hash != expected) {
+   <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> DsyncException(<span class="hljs-string">"Oh shit, we have a dsync during loading."</span>, lastValidTurnNumber);
+}
+</pre>First thing I did was to allow partially valid game submissions. This way players who put hours into a game were at least rewarded all hours until the dsync happened. I went on and stored the last valid turn number of those games in the database on my server. But this was just a workaround, not a fix. Players would still lose a significant amount of hours they put into those games.
+
+If I could just debug those games! What I needed was such a device and a debugger. But I didn't have access to such a device. So I shipped a kind of dsync-debugger with the app. When the server responds with a partially valid game, the result screen would first apologize to the player and briefly explain what kind of error just happened. And it would offer a new button, to help with debugging that dsync:
+
+<div class="center"><img alt="A button to help with debugging the dsync" src="https://mazebert.com/images/dsync-submit-screen.jpg" srcset="https://mazebert.com/images/dsync-submit-screen-2x.jpg 2x"></div>
+
+Once the player presses that button, the game is simulated on the player's device one more time. And as soon as the simulation reaches the last valid turn - the one server and client still agreed upon - the hash implementation is swapped to a debug hash implementation:
+<pre class="hljs">
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">strictfp</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">DebugHash</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Hash</span> </span>{
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> LogPlugin logPlugin = Sim.context().logPlugin;
+
+    <span class="hljs-meta">@Override</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">add</span><span class="hljs-params">(<span class="hljs-keyword">boolean</span> value)</span> </span>{
+        <span class="hljs-keyword">super</span>.add(value);
+        log(<span class="hljs-string">"boolean="</span> + value);
+    }
+
+    <span class="hljs-meta">@Override</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">add</span><span class="hljs-params">(<span class="hljs-keyword">int</span> value)</span> </span>{
+        <span class="hljs-keyword">super</span>.add(value);
+        log(<span class="hljs-string">"int="</span> + value);
+    }
+
+    <span class="hljs-meta">@Override</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">add</span><span class="hljs-params">(<span class="hljs-keyword">long</span> value)</span> </span>{
+        <span class="hljs-keyword">super</span>.add(value);
+        log(<span class="hljs-string">"long="</span> + value);
+    }
+
+    <span class="hljs-meta">@Override</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">add</span><span class="hljs-params">(<span class="hljs-keyword">float</span> value)</span> </span>{
+        <span class="hljs-keyword">super</span>.add(value);
+        log(<span class="hljs-string">"float="</span> + value + <span class="hljs-string">", bin="</span> + Float.floatToIntBits(value));
+    }
+
+    <span class="hljs-meta">@Override</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">add</span><span class="hljs-params">(<span class="hljs-keyword">double</span> value)</span> </span>{
+        <span class="hljs-keyword">super</span>.add(value);
+        log(<span class="hljs-string">"double="</span> + value + <span class="hljs-string">", bin="</span> + Double.doubleToLongBits(value));
+    }
+
+    <span class="hljs-meta">@Override</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">add</span><span class="hljs-params">(Enum value)</span> </span>{
+        <span class="hljs-keyword">super</span>.add(value);
+        log(<span class="hljs-string">"enum="</span> + value);
+    }
+
+    <span class="hljs-meta">@Override</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">add</span><span class="hljs-params">(UUID value)</span> </span>{
+        <span class="hljs-keyword">super</span>.add(value);
+        log(<span class="hljs-string">"uuid="</span> + value);
+    }
+
+    <span class="hljs-meta">@Override</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">add</span><span class="hljs-params">(Hashable value)</span> </span>{
+        log(<span class="hljs-string">"Begin hash of "</span> + value);
+        <span class="hljs-keyword">super</span>.add(value);
+        log(<span class="hljs-string">"End hash of "</span> + value);
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">log</span><span class="hljs-params">(String message)</span> </span>{
+        logPlugin.log(get() + <span class="hljs-string">": "</span> + message);
+    }
+}
+</pre>Now, all hash calculations are logged until the dsync exception is thrown! Afterwards the log is sent to my server. Then I would download the save game to my MacBook and simulate the game one more time with the same debug option activated. And finally I ended up with a diff of hash log lines to compare. Here's one of the diffs I've been checking recently:
+<a href="https://mazebert.com/images/dsync-debug.png" target="_blank"><img alt="A dsync diff" src="https://mazebert.com/images/dsync-debug.png"></a>
+In this diff, the problem was the max health calculation of creeps. The dsync happened when hashing the hitpoints of a creep. I then tracked it down to this method:
+<pre class="hljs">
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">double</span> <span class="hljs-title">getTotalCreepHitpoints</span><span class="hljs-params">(<span class="hljs-keyword">int</span> round, Difficulty difficulty)</span> </span>{
+    <span class="hljs-keyword">double</span> x = round - <span class="hljs-number">1</span>;
+
+    <span class="hljs-comment">// Add endgame hitpoints if we are there yet!</span>
+    <span class="hljs-keyword">double</span> endgameHitpoints = <span class="hljs-number">0.0</span>;
+    <span class="hljs-keyword">if</span> (x &gt;= <span class="hljs-number">140.0</span>) {
+        <span class="hljs-keyword">double</span> endgameX = x - <span class="hljs-number">140</span>;
+        endgameHitpoints = difficulty.endGameFactor * endgameX * endgameX * endgameX * endgameX;
+    }
+
+    <span class="hljs-keyword">return</span> StrictMath.round(endgameHitpoints + difficulty.midGameFactor * x * x * x * x + difficulty.earlyGameFactor * x * x + getLinearCreepHitpoints(round));
+}
+</pre>It took me quite a moment to find out what the problem was. <code>StrictMath.round</code> returns a long which is then casted back into a double. Apparently the cast from long to double is not really covered by strictfp on all devices. Now the fix was pretty straight forward:
+<pre class="hljs">
+<span class="hljs-keyword">double</span> hp = endgameHitpoints + difficulty.midGameFactor * x * x * x * x + difficulty.earlyGameFactor * x * x + getLinearCreepHitpoints(round);
+<span class="hljs-keyword">if</span> (version &gt;= Sim.v15) {
+    <span class="hljs-keyword">return</span> hp;
+} <span class="hljs-keyword">else</span> {
+    <span class="hljs-keyword">return</span> StrictMath.round(hp);
+}
+</pre>If you are wondering about the if condition, that one is required so that old games can still be validated by the server and that new clients can play old replay files without running into a dsync.
+
+Another dsync I debugged this way was caused by a treasure goblin...
+
+This was my code to calculate the gold for a round (since a treasure goblin is alone he will get all gold for himself):
+<pre class="hljs">
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> <span class="hljs-title">getGoldForRound</span><span class="hljs-params">(<span class="hljs-keyword">int</span> round)</span> </span>{
+   <span class="hljs-keyword">int</span> gold = (<span class="hljs-keyword">int</span>) StrictMath.round(StrictMath.pow(<span class="hljs-number">1.0125</span>, round) * <span class="hljs-number">50.0</span>);
+   <span class="hljs-keyword">return</span> gold &gt; <span class="hljs-number">1000</span> ? <span class="hljs-number">1000</span> : gold;
+}
+</pre>Now, in higher rounds this caused an integer overflow. The gold becomes negative! Which by itself is already a bug, but as in the hitpoints dsync one device did this conversion slightly different:
+<pre class="hljs">
+Client: <span class="hljs-keyword">int</span>=-<span class="hljs-number">1738923812</span>
+Server: <span class="hljs-keyword">int</span>=-<span class="hljs-number">1738923813</span>
+</pre>And this is what caused the dsync in the end.
+
+The fixed code is now this:
+<pre class="hljs">
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> <span class="hljs-title">getGoldForRound</span><span class="hljs-params">(<span class="hljs-keyword">int</span> round, <span class="hljs-keyword">int</span> version)</span> </span>{
+   <span class="hljs-keyword">double</span> rawGold = StrictMath.pow(<span class="hljs-number">1.0125</span>, round) * <span class="hljs-number">50.0</span>;
+   <span class="hljs-keyword">int</span> gold = (<span class="hljs-keyword">int</span>) StrictMath.round(rawGold);
+
+   <span class="hljs-keyword">if</span> (version &gt;= Sim.v16) {
+      <span class="hljs-keyword">if</span> (rawGold &gt; <span class="hljs-number">1000.0</span>) {
+         <span class="hljs-keyword">return</span> <span class="hljs-number">1000</span>;
+      }
+   } <span class="hljs-keyword">else</span> {
+      <span class="hljs-keyword">if</span> (gold &gt; <span class="hljs-number">1000</span>) {
+         <span class="hljs-keyword">return</span> <span class="hljs-number">1000</span>;
+      }
+   }
+   <span class="hljs-keyword">return</span> gold;
+}
+</pre>
+I really hope from now on there won't be any more dsyncs for me to debug! A big sorry to all the players who experienced dsync errors with their games. I feel with you, this must have been very frustrating. And a big thank you for being so patient with me and staying so calm despite losing hours of game time. I'm so glad this is such a nice and helpful community!
+
+Happy building!</span>
+
+    <button data-playerid="115" data-postid="6311" class="edit-post-button">Edit</button>
+</div>
+<hr/>
+
+    </div>
+
+    <script>
+    var formatTimeDelta = {
+        ONE_MINUTE: 60,
+        ONE_HOUR: 3600,
+        ONE_DAY: 86400,
+        ONE_MONTH: 2592000,
+        ONE_YEAR: 31536000,
+
+        formatTimeValueSuffix: function (value, unit, suffix) {
+            value = Math.floor(value);
+            if (value < 1 || value > 1) {
+                unit += "s";
+            }
+            return value + " " + unit + suffix;
+        },
+
+        formatTimeValue: function (value, unit) {
+            return this.formatTimeValueSuffix(value, unit, " ago");
+        },
+
+        formatYears: function (delta) {
+            return this.formatTimeValue(delta / this.ONE_YEAR, "year");
+        },
+
+        formatMonths: function (delta) {
+            return this.formatTimeValue(delta / this.ONE_MONTH, "month");
+        },
+
+        formatDays: function (delta) {
+            return this.formatTimeValue(delta / this.ONE_DAY, "day");
+        },
+
+        formatHours: function (delta) {
+            return this.formatTimeValue(delta / this.ONE_HOUR, "hour");
+        },
+
+        formatMinutes: function (delta) {
+            return this.formatTimeValue(delta / this.ONE_MINUTE, "minute");
+        },
+
+        formatSeconds: function (delta) {
+            return this.formatTimeValue(delta, "second");
+        },
+
+        formatDelta: function (delta) {
+            if (delta <= 0) {
+                return 'now';
+            }
+
+            if (delta < this.ONE_MINUTE) return this.formatSeconds(delta);
+            if (delta < this.ONE_HOUR) return this.formatMinutes(delta);
+            if (delta < this.ONE_DAY) return this.formatHours(delta);
+            if (delta < this.ONE_MONTH) return this.formatDays(delta);
+            if (delta < this.ONE_YEAR) return this.formatMonths(delta);
+            return this.formatYears(delta);
+        },
+
+        formatDeltaVerbose: function(delta) {
+            if (delta < 0) {
+                delta = 0;
+            }
+
+            return this.formatTimeValueSuffix(delta / this.ONE_DAY, 'day', ', ') +
+                   this.formatTimeValueSuffix((delta % this.ONE_DAY) / this.ONE_HOUR, 'hour', ', ') +
+                   this.formatTimeValueSuffix((delta % this.ONE_HOUR) / this.ONE_MINUTE, 'minute', ', ') +
+                   this.formatTimeValueSuffix(Math.floor(delta) % this.ONE_MINUTE, 'second', '');
+        },
+
+        formatElement: function($element) {
+            var delta = (Date.now() / 1000) - $element.data('ts');
+            $element.html(this.formatDelta(delta));
+
+            return delta;
+        },
+
+        format: function($selector) {
+            var that = this;
+            var elementsToRefresh = [];
+
+            $selector.each(function() {
+                var delta = that.formatElement($(this));
+
+                if (delta < that.ONE_HOUR) {
+                    elementsToRefresh[elementsToRefresh.length] = $(this);
+                }
+            });
+
+            if (elementsToRefresh.length > 0) {
+                setInterval(function(){
+                    for (var i = 0; i < elementsToRefresh.length; ++i) {
+                        that.formatElement(elementsToRefresh[i]);
+                    }
+                }, 1000);
+            }
+        },
+    }
+</script>
+    <script>
+        $(document).ready(function() {
+            formatTimeDelta.format($('.post-created'));
+        });
+    </script>
+
+            <div id="card-preview" style="position: absolute; display: none; top: 0; left: 0;">
+    <img src="" srcset="" alt="Preview" />
+</div>
+
+<script>
+$(document).ready(function() {
+    var CardInfo = function() {
+        this.id = 0;
+        this.type = null;
+    };
+
+    var CardPreview = function() {
+
+        this.calculateCardTypePrefix = function(type) {
+            if (type === 'hero') return 'heroes/golden/Hero';
+            if (type === 'tower') return 'towers/golden/Tower';
+            if (type === 'item') return 'items/golden/Item';
+            if (type === 'potion') return 'potions/golden/Potion';
+            return '';
+        };
+
+        this.calculateImagePath = function(cardInfo) {
+            var path = 'https://mazebert.com/wp-content/themes/twentytwelve/images/';
+            path += this.calculateCardTypePrefix(cardInfo.type);
+            path += '-' + cardInfo.id + '-card-preview.png';
+
+            return path;
+        };
+
+        this.calculateImagePath2x = function(cardInfo) {
+            var path = 'https://mazebert.com/wp-content/themes/twentytwelve/images/';
+            path += this.calculateCardTypePrefix(cardInfo.type);
+            path += '-' + cardInfo.id + '-card.png';
+
+            return path;
+        };
+
+        this.show = function(cardInfo) {
+            var image = $('#card-preview img');
+            image.attr('src', this.calculateImagePath(cardInfo));
+            image.attr('srcset', this.calculateImagePath2x(cardInfo) + " 2x");
+            $('#card-preview').show();
+        };
+
+        this.hide = function() {
+            $('#card-preview').hide();
+        };
+
+        this.update = function(x, y) {
+            var offsetX = 60;
+            if (x > $(document).width() / 2) {
+                offsetX = -320 - 30;
+            }
+            $('#card-preview').css('left', x + offsetX).css('top', y - 212);
+        };
+    };
+
+    var CardInfoParser = function() {
+
+        this.parseCssInfo = function(cssClass, classPrefix, defaultValue) {
+            if (cssClass.indexOf(classPrefix) === 0) {
+                return cssClass.substr(classPrefix.length);
+            } else {
+                return defaultValue;
+            }
+        };
+
+        this.parseCardInfo = function(classes) {
+            var cardInfo = new CardInfo();
+            classes = classes.split(' ');
+
+            for (var i = 0, length = classes.length; i < length; ++i) {
+                cardInfo.id = this.parseCssInfo(classes[i], 'card-id-', cardInfo.id);
+                cardInfo.type = this.parseCssInfo(classes[i], 'card-type-', cardInfo.type);
+            }
+
+            return cardInfo;
+        };
+    };
+
+    var cardPreview = new CardPreview();
+    var cardInfoParser = new CardInfoParser();
+
+    $('span.card-info').mouseenter(function() {
+        var classes = $(this).attr('class');
+        cardPreview.show(cardInfoParser.parseCardInfo(classes));
+    }).mouseleave(function() {
+        cardPreview.hide();
+    }).mousemove(function(event) {
+        var relX = event.pageX;
+        var relY = event.pageY;
+
+        cardPreview.update(relX, relY);
+    });
+});
+</script>
+        </main>
+
+        <footer class="footer">
+            <div class="content has-text-centered">
+                <p>
+                    <strong>Mazebert TD</strong> by Andreas Hager.<br/>
+                    <a href="https://mazebert.com/privacy-policy/">Privacy</a>. <a href="https://mazebert.com/legal-notice/">Legal notice</a>.
+                </p>
+            </div>
+        </footer>
+
+        <script>
+            $(document).ready(function() {
+                $('.nav-mobile').click(function(){
+                    $('#nav-icon').toggleClass('open');
+                    $('.nav-menu').toggleClass('open');
+                });
+            });
+        </script>
+
+    </body>
+</html>
+

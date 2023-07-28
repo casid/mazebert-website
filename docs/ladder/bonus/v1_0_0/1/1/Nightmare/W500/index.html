@@ -1,0 +1,806 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="nofollow">
+        <meta name="language" content="en">
+        <title>Ladder</title>
+        <link rel="stylesheet" href="https://mazebert.com/assets/css/mazebert.css?t=1690563617">
+        <script src="https://mazebert.com/assets/js/jquery.min.js?t=1690563617"></script>
+    </head>
+
+    <body>
+        <header>
+            <nav class="navigation">
+                <a class="nav-brand" href="https://mazebert.com/">
+                    <img srcset="https://mazebert.com/assets/images/app-icon.png?t=1690563617, https://mazebert.com/assets/images/app-icon-2x.png?t=1690563617 2x" src="https://mazebert.com/assets/images/app-icon-2x.png?t=1690563617" class="app-icon" alt="Mazebert TD - Play your cards wisely to survive">
+                </a>
+                <div class="nav-mobile">
+                    <div id="nav-icon">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                    <span class="forum-badge badge"></span>
+                </div>
+                <div class="nav-menu">
+                    <a href="https://mazebert.com/news/" class="nav-item">News</a>
+                    <a href="https://mazebert.com/stats/" class="nav-item">Stats</a>
+                    <a href="https://mazebert.com/cards/" class="nav-item">Cards</a>
+                    <a href="https://mazebert.com/forum/" class="nav-item">Forum<span class="forum-badge badge"></span></a>
+                    <a href="https://mazebert.com/ladder/" class="nav-item is-active">Ladder</a>
+                    <a href="https://mazebert.com/credits/" class="nav-item">Credits</a>
+                    <a href="https://mazebert.com/reviews/" class="nav-item">Reviews</a>
+                </div>
+            </nav>
+        </header>
+
+        <main class="has-navbar-fixed-top">
+            
+    <div class="container ladder center">
+        <h1>Ladder</h1>
+
+        <div style="width:320px;" class="center">
+            <a id="show-bonus" class="ladder-selector-link" href="https://mazebert.com/ladder/">
+                <div class="ladder-selector active"></div>
+            </a>
+            <a id="show-progress" class="ladder-selector-link" href="https://mazebert.com/ladder/progress/0/">
+                <div class="ladder-selector"></div>
+            </a>
+        </div>
+
+        <div style="clear:both;"></div>
+
+        <div class="entry-content">
+            Version:<br>
+            <a class="" href="https://mazebert.com/ladder/bonus/v2_6_0/1/1/Nightmare/W500/">2.6</a> <a class="" href="https://mazebert.com/ladder/bonus/v2_5_0/1/1/Nightmare/W500/">2.5</a> <a class="" href="https://mazebert.com/ladder/bonus/v2_3_0/1/1/Nightmare/W500/">2.3</a> <a class="" href="https://mazebert.com/ladder/bonus/v2_2_0/1/1/Nightmare/W500/">2.2</a> <a class="" href="https://mazebert.com/ladder/bonus/v2_1_0/1/1/Nightmare/W500/">2.1</a> <a class="" href="https://mazebert.com/ladder/bonus/v2_0_0/1/1/Nightmare/W500/">2.0</a> <a class="" href="https://mazebert.com/ladder/bonus/v1_8_0/1/1/Nightmare/W500/">1.8</a> <a class="" href="https://mazebert.com/ladder/bonus/v1_7_0/1/1/Nightmare/W500/">1.7</a> <a class="" href="https://mazebert.com/ladder/bonus/v1_6_0/1/1/Nightmare/W500/">1.6</a> <a class="" href="https://mazebert.com/ladder/bonus/v1_4_0/1/1/Nightmare/W500/">1.4</a> <a class="" href="https://mazebert.com/ladder/bonus/v1_3_0/1/1/Nightmare/W500/">1.3</a> <a class="" href="https://mazebert.com/ladder/bonus/v1_2_0/1/1/Nightmare/W500/">1.2</a> <a class="" href="https://mazebert.com/ladder/bonus/v1_1_0/1/1/Nightmare/W500/">1.1</a> <a class="rarity-5" href="https://mazebert.com/ladder/bonus/v1_0_0/1/1/Nightmare/W500/">1.0</a> <a class="" href="https://mazebert.com/ladder/bonus/v0_10_0/1/1/Nightmare/W500/">0.10</a> <a class="" href="https://mazebert.com/ladder/bonus/v0_9_3/1/1/Nightmare/W500/">0.9.3</a> <a class="" href="https://mazebert.com/ladder/bonus/v0_9_2/1/1/Nightmare/W500/">0.9.2</a> 
+            <br>Players:<br>
+            <a class="rarity-5" href="https://mazebert.com/ladder/bonus/v1_0_0/1/1/Nightmare/W500/">1</a> <a class="" href="https://mazebert.com/ladder/bonus/v1_0_0/2/1/Nightmare/W500/">2</a> <a class="" href="https://mazebert.com/ladder/bonus/v1_0_0/3/1/Nightmare/W500/">3</a> <a class="" href="https://mazebert.com/ladder/bonus/v1_0_0/4/1/Nightmare/W500/">4</a> 
+            <br>Map:<br>
+            <a class="rarity-5" href="https://mazebert.com/ladder/bonus/v1_0_0/1/1/Nightmare/W500/">Blood Moor</a> <a class="" href="https://mazebert.com/ladder/bonus/v1_0_0/1/2/Nightmare/W500/">Shattered Plains</a> <a class="" href="https://mazebert.com/ladder/bonus/v1_0_0/1/3/Nightmare/W500/">Twisted Paths</a> <a class="" href="https://mazebert.com/ladder/bonus/v1_0_0/1/4/Nightmare/W500/">Dawn of Light</a> <a class="" href="https://mazebert.com/ladder/bonus/v1_0_0/1/5/Nightmare/W500/">Golden Grounds</a> 
+            <br>Difficulty:<br>
+            <a class="" href="https://mazebert.com/ladder/bonus/v1_0_0/1/1/Any/W500/">Any</a> <a class="" href="https://mazebert.com/ladder/bonus/v1_0_0/1/1/Normal/W500/">Normal</a> <a class="rarity-5" href="https://mazebert.com/ladder/bonus/v1_0_0/1/1/Nightmare/W500/">Nightmare</a> <a class="" href="https://mazebert.com/ladder/bonus/v1_0_0/1/1/Hell/W500/">Hell</a> 
+            <br>Wave Amount:<br>
+            <a class="" href="https://mazebert.com/ladder/bonus/v1_0_0/1/1/Nightmare/Any/">Any</a> <a class="" href="https://mazebert.com/ladder/bonus/v1_0_0/1/1/Nightmare/W200/">200</a> <a class="" href="https://mazebert.com/ladder/bonus/v1_0_0/1/1/Nightmare/W300/">300</a> <a class="" href="https://mazebert.com/ladder/bonus/v1_0_0/1/1/Nightmare/W400/">400</a> <a class="rarity-5" href="https://mazebert.com/ladder/bonus/v1_0_0/1/1/Nightmare/W500/">500</a> 
+            <br>
+
+            <table style="text-align: left;">
+                <thead>
+                <tr>
+                    <th style="width:10%">Rank</th>
+                    <th>Player</th>
+                    <th style="width:15%; text-align: right">Survived</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>1</td>
+                    <td><a href="https://mazebert.com/player/8752/">GoD1</a></td>
+                    <td class="right">34042</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td><a href="https://mazebert.com/player/15427/">Kahli</a></td>
+                    <td class="right">27896</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td><a href="https://mazebert.com/player/16537/">you</a></td>
+                    <td class="right">19989</td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td><a href="https://mazebert.com/player/14313/">tehtiny</a></td>
+                    <td class="right">14837</td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td><a href="https://mazebert.com/player/14371/">Vax</a></td>
+                    <td class="right">12224</td>
+                </tr>
+                <tr>
+                    <td>6</td>
+                    <td><a href="https://mazebert.com/player/14766/">cutiebone</a></td>
+                    <td class="right">11901</td>
+                </tr>
+                <tr>
+                    <td>7</td>
+                    <td><a href="https://mazebert.com/player/17113/">Nightmare</a></td>
+                    <td class="right">11013</td>
+                </tr>
+                <tr>
+                    <td>8</td>
+                    <td><a href="https://mazebert.com/player/18881/">ProphetOfCthulhu</a></td>
+                    <td class="right">10686</td>
+                </tr>
+                <tr>
+                    <td>9</td>
+                    <td><a href="https://mazebert.com/player/15780/">xxm</a></td>
+                    <td class="right">10263</td>
+                </tr>
+                <tr>
+                    <td>10</td>
+                    <td><a href="https://mazebert.com/player/10570/">Al</a></td>
+                    <td class="right">9292</td>
+                </tr>
+                <tr>
+                    <td>11</td>
+                    <td><a href="https://mazebert.com/player/11590/">icen</a></td>
+                    <td class="right">8950</td>
+                </tr>
+                <tr>
+                    <td>12</td>
+                    <td><a href="https://mazebert.com/player/3445/">Thierry</a></td>
+                    <td class="right">8655</td>
+                </tr>
+                <tr>
+                    <td>13</td>
+                    <td><a href="https://mazebert.com/player/8761/">yourfack</a></td>
+                    <td class="right">8359</td>
+                </tr>
+                <tr>
+                    <td>14</td>
+                    <td><a href="https://mazebert.com/player/10847/">Joe</a></td>
+                    <td class="right">8266</td>
+                </tr>
+                <tr>
+                    <td>15</td>
+                    <td><a href="https://mazebert.com/player/18973/">ranko </a></td>
+                    <td class="right">7453</td>
+                </tr>
+                <tr>
+                    <td>16</td>
+                    <td><a href="https://mazebert.com/player/15555/">Gypo</a></td>
+                    <td class="right">7212</td>
+                </tr>
+                <tr>
+                    <td>17</td>
+                    <td><a href="https://mazebert.com/player/5655/">jojo</a></td>
+                    <td class="right">6967</td>
+                </tr>
+                <tr>
+                    <td>18</td>
+                    <td><a href="https://mazebert.com/player/16480/">Assquatch</a></td>
+                    <td class="right">6886</td>
+                </tr>
+                <tr>
+                    <td>19</td>
+                    <td><a href="https://mazebert.com/player/19523/">Waltz</a></td>
+                    <td class="right">6825</td>
+                </tr>
+                <tr>
+                    <td>20</td>
+                    <td><a href="https://mazebert.com/player/15249/">Nyx</a></td>
+                    <td class="right">6571</td>
+                </tr>
+                <tr>
+                    <td>21</td>
+                    <td><a href="https://mazebert.com/player/18830/">Warrax</a></td>
+                    <td class="right">6217</td>
+                </tr>
+                <tr>
+                    <td>22</td>
+                    <td><a href="https://mazebert.com/player/2796/">Drmatt66</a></td>
+                    <td class="right">5863</td>
+                </tr>
+                <tr>
+                    <td>23</td>
+                    <td><a href="https://mazebert.com/player/15996/">jellant</a></td>
+                    <td class="right">5768</td>
+                </tr>
+                <tr>
+                    <td>24</td>
+                    <td><a href="https://mazebert.com/player/2367/">Jarecv</a></td>
+                    <td class="right">5752</td>
+                </tr>
+                <tr>
+                    <td>25</td>
+                    <td><a href="https://mazebert.com/player/1771/">Rey </a></td>
+                    <td class="right">5672</td>
+                </tr>
+                <tr>
+                    <td>26</td>
+                    <td><a href="https://mazebert.com/player/6997/">fayez</a></td>
+                    <td class="right">5616</td>
+                </tr>
+                <tr>
+                    <td>27</td>
+                    <td><a href="https://mazebert.com/player/4002/">tuckerdidit</a></td>
+                    <td class="right">5612</td>
+                </tr>
+                <tr>
+                    <td>28</td>
+                    <td><a href="https://mazebert.com/player/16294/">Forgottn</a></td>
+                    <td class="right">5473</td>
+                </tr>
+                <tr>
+                    <td>29</td>
+                    <td><a href="https://mazebert.com/player/4259/">nope</a></td>
+                    <td class="right">5404</td>
+                </tr>
+                <tr>
+                    <td>30</td>
+                    <td><a href="https://mazebert.com/player/1054/">Baka</a></td>
+                    <td class="right">5251</td>
+                </tr>
+                <tr>
+                    <td>31</td>
+                    <td><a href="https://mazebert.com/player/15670/">kayla</a></td>
+                    <td class="right">5182</td>
+                </tr>
+                <tr>
+                    <td>32</td>
+                    <td><a href="https://mazebert.com/player/16164/">gados1</a></td>
+                    <td class="right">5061</td>
+                </tr>
+                <tr>
+                    <td>33</td>
+                    <td><a href="https://mazebert.com/player/1684/">Djnanashi</a></td>
+                    <td class="right">4988</td>
+                </tr>
+                <tr>
+                    <td>34</td>
+                    <td><a href="https://mazebert.com/player/16894/">Ruki</a></td>
+                    <td class="right">4892</td>
+                </tr>
+                <tr>
+                    <td>35</td>
+                    <td><a href="https://mazebert.com/player/8217/">Dragonrakion</a></td>
+                    <td class="right">4616</td>
+                </tr>
+                <tr>
+                    <td>36</td>
+                    <td><a href="https://mazebert.com/player/16037/">ace</a></td>
+                    <td class="right">4570</td>
+                </tr>
+                <tr>
+                    <td>37</td>
+                    <td><a href="https://mazebert.com/player/16576/">RiesRock</a></td>
+                    <td class="right">4514</td>
+                </tr>
+                <tr>
+                    <td>38</td>
+                    <td><a href="https://mazebert.com/player/19056/">apokolokyntosis</a></td>
+                    <td class="right">4203</td>
+                </tr>
+                <tr>
+                    <td>39</td>
+                    <td><a href="https://mazebert.com/player/15622/">Song</a></td>
+                    <td class="right">4172</td>
+                </tr>
+                <tr>
+                    <td>40</td>
+                    <td><a href="https://mazebert.com/player/3487/">maza282 </a></td>
+                    <td class="right">4150</td>
+                </tr>
+                <tr>
+                    <td>41</td>
+                    <td><a href="https://mazebert.com/player/12359/">f</a></td>
+                    <td class="right">4128</td>
+                </tr>
+                <tr>
+                    <td>42</td>
+                    <td><a href="https://mazebert.com/player/12445/">Lashdemonca</a></td>
+                    <td class="right">3871</td>
+                </tr>
+                <tr>
+                    <td>43</td>
+                    <td><a href="https://mazebert.com/player/15298/">Dictator</a></td>
+                    <td class="right">3867</td>
+                </tr>
+                <tr>
+                    <td>44</td>
+                    <td><a href="https://mazebert.com/player/17686/">qnrhkd</a></td>
+                    <td class="right">3847</td>
+                </tr>
+                <tr>
+                    <td>45</td>
+                    <td><a href="https://mazebert.com/player/15185/">Mr. Dickens Siderbutt</a></td>
+                    <td class="right">3839</td>
+                </tr>
+                <tr>
+                    <td>46</td>
+                    <td><a href="https://mazebert.com/player/1606/">Kyle</a></td>
+                    <td class="right">3758</td>
+                </tr>
+                <tr>
+                    <td>47</td>
+                    <td><a href="https://mazebert.com/player/15951/">Tuga</a></td>
+                    <td class="right">3744</td>
+                </tr>
+                <tr>
+                    <td>48</td>
+                    <td><a href="https://mazebert.com/player/17861/">Warrax</a></td>
+                    <td class="right">3642</td>
+                </tr>
+                <tr>
+                    <td>49</td>
+                    <td><a href="https://mazebert.com/player/14925/">Norvask</a></td>
+                    <td class="right">3634</td>
+                </tr>
+                <tr>
+                    <td>50</td>
+                    <td><a href="https://mazebert.com/player/16757/">Jey d'Oz</a></td>
+                    <td class="right">3621</td>
+                </tr>
+                <tr>
+                    <td>51</td>
+                    <td><a href="https://mazebert.com/player/782/">SkyPiglet</a></td>
+                    <td class="right">3446</td>
+                </tr>
+                <tr>
+                    <td>52</td>
+                    <td><a href="https://mazebert.com/player/16594/">bob</a></td>
+                    <td class="right">3430</td>
+                </tr>
+                <tr>
+                    <td>53</td>
+                    <td><a href="https://mazebert.com/player/13211/">Lakrimosa</a></td>
+                    <td class="right">3371</td>
+                </tr>
+                <tr>
+                    <td>54</td>
+                    <td><a href="https://mazebert.com/player/18334/">tecky</a></td>
+                    <td class="right">3302</td>
+                </tr>
+                <tr>
+                    <td>55</td>
+                    <td><a href="https://mazebert.com/player/16879/">keagle </a></td>
+                    <td class="right">3168</td>
+                </tr>
+                <tr>
+                    <td>56</td>
+                    <td><a href="https://mazebert.com/player/116/">Vasuhn</a></td>
+                    <td class="right">3147</td>
+                </tr>
+                <tr>
+                    <td>57</td>
+                    <td><a href="https://mazebert.com/player/4401/">DaKnob</a></td>
+                    <td class="right">3098</td>
+                </tr>
+                <tr>
+                    <td>58</td>
+                    <td><a href="https://mazebert.com/player/15511/">Mendeleev</a></td>
+                    <td class="right">3079</td>
+                </tr>
+                <tr>
+                    <td>59</td>
+                    <td><a href="https://mazebert.com/player/5255/">ingrimm</a></td>
+                    <td class="right">3006</td>
+                </tr>
+                <tr>
+                    <td>60</td>
+                    <td><a href="https://mazebert.com/player/7163/">Condor</a></td>
+                    <td class="right">2955</td>
+                </tr>
+                <tr>
+                    <td>61</td>
+                    <td><a href="https://mazebert.com/player/3873/">пп</a></td>
+                    <td class="right">2896</td>
+                </tr>
+                <tr>
+                    <td>62</td>
+                    <td><a href="https://mazebert.com/player/4650/">Airspace</a></td>
+                    <td class="right">2631</td>
+                </tr>
+                <tr>
+                    <td>63</td>
+                    <td><a href="https://mazebert.com/player/15059/">Bpy6</a></td>
+                    <td class="right">2592</td>
+                </tr>
+                <tr>
+                    <td>64</td>
+                    <td><a href="https://mazebert.com/player/18531/">Wenarex</a></td>
+                    <td class="right">2562</td>
+                </tr>
+                <tr>
+                    <td>65</td>
+                    <td><a href="https://mazebert.com/player/16746/">LoGiX</a></td>
+                    <td class="right">2514</td>
+                </tr>
+                <tr>
+                    <td>66</td>
+                    <td><a href="https://mazebert.com/player/15682/">QuarkRoyal</a></td>
+                    <td class="right">2279</td>
+                </tr>
+                <tr>
+                    <td>67</td>
+                    <td><a href="https://mazebert.com/player/4358/">Moon</a></td>
+                    <td class="right">2125</td>
+                </tr>
+                <tr>
+                    <td>68</td>
+                    <td><a href="https://mazebert.com/player/3401/">KV</a></td>
+                    <td class="right">2029</td>
+                </tr>
+                <tr>
+                    <td>69</td>
+                    <td><a href="https://mazebert.com/player/15266/">Baugh</a></td>
+                    <td class="right">2018</td>
+                </tr>
+                <tr>
+                    <td>70</td>
+                    <td><a href="https://mazebert.com/player/15863/">co0kie</a></td>
+                    <td class="right">1936</td>
+                </tr>
+                <tr>
+                    <td>71</td>
+                    <td><a href="https://mazebert.com/player/7691/">Sarore</a></td>
+                    <td class="right">1892</td>
+                </tr>
+                <tr>
+                    <td>72</td>
+                    <td><a href="https://mazebert.com/player/16095/">Vincent</a></td>
+                    <td class="right">1891</td>
+                </tr>
+                <tr>
+                    <td>73</td>
+                    <td><a href="https://mazebert.com/player/12685/">Richard </a></td>
+                    <td class="right">1724</td>
+                </tr>
+                <tr>
+                    <td>74</td>
+                    <td><a href="https://mazebert.com/player/17872/">Juniorunior</a></td>
+                    <td class="right">1717</td>
+                </tr>
+                <tr>
+                    <td>75</td>
+                    <td><a href="https://mazebert.com/player/14813/">slouker </a></td>
+                    <td class="right">1629</td>
+                </tr>
+                <tr>
+                    <td>76</td>
+                    <td><a href="https://mazebert.com/player/15720/">IrVi</a></td>
+                    <td class="right">1621</td>
+                </tr>
+                <tr>
+                    <td>77</td>
+                    <td><a href="https://mazebert.com/player/7918/">Chrono89</a></td>
+                    <td class="right">1592</td>
+                </tr>
+                <tr>
+                    <td>78</td>
+                    <td><a href="https://mazebert.com/player/15718/">AngelDust</a></td>
+                    <td class="right">1582</td>
+                </tr>
+                <tr>
+                    <td>79</td>
+                    <td><a href="https://mazebert.com/player/167/">Thomadin</a></td>
+                    <td class="right">1574</td>
+                </tr>
+                <tr>
+                    <td>80</td>
+                    <td><a href="https://mazebert.com/player/4850/">fnsl</a></td>
+                    <td class="right">1525</td>
+                </tr>
+                <tr>
+                    <td>81</td>
+                    <td><a href="https://mazebert.com/player/14373/">blackingkong</a></td>
+                    <td class="right">1516</td>
+                </tr>
+                <tr>
+                    <td>82</td>
+                    <td><a href="https://mazebert.com/player/16325/">jan</a></td>
+                    <td class="right">1435</td>
+                </tr>
+                <tr>
+                    <td>83</td>
+                    <td><a href="https://mazebert.com/player/17490/">JayPanda</a></td>
+                    <td class="right">1430</td>
+                </tr>
+                <tr>
+                    <td>84</td>
+                    <td><a href="https://mazebert.com/player/10960/">Kudlaty</a></td>
+                    <td class="right">1422</td>
+                </tr>
+                <tr>
+                    <td>85</td>
+                    <td><a href="https://mazebert.com/player/14566/">Overlord</a></td>
+                    <td class="right">1399</td>
+                </tr>
+                <tr>
+                    <td>86</td>
+                    <td><a href="https://mazebert.com/player/17918/">artifice</a></td>
+                    <td class="right">1369</td>
+                </tr>
+                <tr>
+                    <td>87</td>
+                    <td><a href="https://mazebert.com/player/19455/">joeri </a></td>
+                    <td class="right">1355</td>
+                </tr>
+                <tr>
+                    <td>88</td>
+                    <td><a href="https://mazebert.com/player/16909/">joji</a></td>
+                    <td class="right">1349</td>
+                </tr>
+                <tr>
+                    <td>89</td>
+                    <td><a href="https://mazebert.com/player/17242/">lukas</a></td>
+                    <td class="right">1318</td>
+                </tr>
+                <tr>
+                    <td>90</td>
+                    <td><a href="https://mazebert.com/player/16810/">GarstigerGargamel</a></td>
+                    <td class="right">1317</td>
+                </tr>
+                <tr>
+                    <td>91</td>
+                    <td><a href="https://mazebert.com/player/10446/">gdb</a></td>
+                    <td class="right">1309</td>
+                </tr>
+                <tr>
+                    <td>92</td>
+                    <td><a href="https://mazebert.com/player/15991/">Martin</a></td>
+                    <td class="right">1304</td>
+                </tr>
+                <tr>
+                    <td>93</td>
+                    <td><a href="https://mazebert.com/player/18758/">dennistan</a></td>
+                    <td class="right">1254</td>
+                </tr>
+                <tr>
+                    <td>94</td>
+                    <td><a href="https://mazebert.com/player/2439/">Eko</a></td>
+                    <td class="right">1220</td>
+                </tr>
+                <tr>
+                    <td>95</td>
+                    <td><a href="https://mazebert.com/player/210/">Ipzirk</a></td>
+                    <td class="right">1179</td>
+                </tr>
+                <tr>
+                    <td>96</td>
+                    <td><a href="https://mazebert.com/player/33875/">Narayee</a></td>
+                    <td class="right">1156</td>
+                </tr>
+                <tr>
+                    <td>97</td>
+                    <td><a href="https://mazebert.com/player/18138/">Frank </a></td>
+                    <td class="right">1114</td>
+                </tr>
+                <tr>
+                    <td>98</td>
+                    <td><a href="https://mazebert.com/player/17261/">tokee91</a></td>
+                    <td class="right">1042</td>
+                </tr>
+                <tr>
+                    <td>99</td>
+                    <td><a href="https://mazebert.com/player/14652/">Andrew</a></td>
+                    <td class="right">1034</td>
+                </tr>
+                <tr>
+                    <td>100</td>
+                    <td><a href="https://mazebert.com/player/10730/">Simo</a></td>
+                    <td class="right">1024</td>
+                </tr>
+                <tr>
+                    <td>101</td>
+                    <td><a href="https://mazebert.com/player/6347/">Neurosis </a></td>
+                    <td class="right">986</td>
+                </tr>
+                <tr>
+                    <td>102</td>
+                    <td><a href="https://mazebert.com/player/18414/">Suzuishi</a></td>
+                    <td class="right">986</td>
+                </tr>
+                <tr>
+                    <td>103</td>
+                    <td><a href="https://mazebert.com/player/16942/">chronos.murmansk</a></td>
+                    <td class="right">964</td>
+                </tr>
+                <tr>
+                    <td>104</td>
+                    <td><a href="https://mazebert.com/player/1532/">coolio</a></td>
+                    <td class="right">958</td>
+                </tr>
+                <tr>
+                    <td>105</td>
+                    <td><a href="https://mazebert.com/player/17259/">test87</a></td>
+                    <td class="right">892</td>
+                </tr>
+                <tr>
+                    <td>106</td>
+                    <td><a href="https://mazebert.com/player/7673/">taby</a></td>
+                    <td class="right">890</td>
+                </tr>
+                <tr>
+                    <td>107</td>
+                    <td><a href="https://mazebert.com/player/15163/">Retyun</a></td>
+                    <td class="right">862</td>
+                </tr>
+                <tr>
+                    <td>108</td>
+                    <td><a href="https://mazebert.com/player/15536/">bakzzz</a></td>
+                    <td class="right">841</td>
+                </tr>
+                <tr>
+                    <td>109</td>
+                    <td><a href="https://mazebert.com/player/16134/">Guille74</a></td>
+                    <td class="right">816</td>
+                </tr>
+                <tr>
+                    <td>110</td>
+                    <td><a href="https://mazebert.com/player/12910/">N@sh</a></td>
+                    <td class="right">789</td>
+                </tr>
+                <tr>
+                    <td>111</td>
+                    <td><a href="https://mazebert.com/player/3809/">ujijuj</a></td>
+                    <td class="right">776</td>
+                </tr>
+                <tr>
+                    <td>112</td>
+                    <td><a href="https://mazebert.com/player/19125/">Sent</a></td>
+                    <td class="right">775</td>
+                </tr>
+                <tr>
+                    <td>113</td>
+                    <td><a href="https://mazebert.com/player/18238/">life</a></td>
+                    <td class="right">768</td>
+                </tr>
+                <tr>
+                    <td>114</td>
+                    <td><a href="https://mazebert.com/player/14401/">Badery</a></td>
+                    <td class="right">738</td>
+                </tr>
+                <tr>
+                    <td>115</td>
+                    <td><a href="https://mazebert.com/player/11721/">stazi</a></td>
+                    <td class="right">681</td>
+                </tr>
+                <tr>
+                    <td>116</td>
+                    <td><a href="https://mazebert.com/player/15218/">Noroc</a></td>
+                    <td class="right">671</td>
+                </tr>
+                <tr>
+                    <td>117</td>
+                    <td><a href="https://mazebert.com/player/16457/">MoriDăteDrq</a></td>
+                    <td class="right">666</td>
+                </tr>
+                <tr>
+                    <td>118</td>
+                    <td><a href="https://mazebert.com/player/18030/">edongsy</a></td>
+                    <td class="right">644</td>
+                </tr>
+                <tr>
+                    <td>119</td>
+                    <td><a href="https://mazebert.com/player/18427/">cross zero </a></td>
+                    <td class="right">583</td>
+                </tr>
+                <tr>
+                    <td>120</td>
+                    <td><a href="https://mazebert.com/player/16015/">Kazimir</a></td>
+                    <td class="right">575</td>
+                </tr>
+                <tr>
+                    <td>121</td>
+                    <td><a href="https://mazebert.com/player/17546/">о</a></td>
+                    <td class="right">401</td>
+                </tr>
+                <tr>
+                    <td>122</td>
+                    <td><a href="https://mazebert.com/player/14428/">Svan</a></td>
+                    <td class="right">363</td>
+                </tr>
+                <tr>
+                    <td>123</td>
+                    <td><a href="https://mazebert.com/player/19153/">Veteran</a></td>
+                    <td class="right">320</td>
+                </tr>
+                <tr>
+                    <td>124</td>
+                    <td><a href="https://mazebert.com/player/4596/">nibume</a></td>
+                    <td class="right">306</td>
+                </tr>
+                <tr>
+                    <td>125</td>
+                    <td><a href="https://mazebert.com/player/18301/">Duronyn</a></td>
+                    <td class="right">283</td>
+                </tr>
+                <tr>
+                    <td>126</td>
+                    <td><a href="https://mazebert.com/player/17277/">slv</a></td>
+                    <td class="right">282</td>
+                </tr>
+                <tr>
+                    <td>127</td>
+                    <td><a href="https://mazebert.com/player/11136/">POMAH</a></td>
+                    <td class="right">271</td>
+                </tr>
+                <tr>
+                    <td>128</td>
+                    <td><a href="https://mazebert.com/player/15816/">Emetheto</a></td>
+                    <td class="right">268</td>
+                </tr>
+                <tr>
+                    <td>129</td>
+                    <td><a href="https://mazebert.com/player/16644/">not</a></td>
+                    <td class="right">261</td>
+                </tr>
+                <tr>
+                    <td>130</td>
+                    <td><a href="https://mazebert.com/player/16911/">vlad</a></td>
+                    <td class="right">244</td>
+                </tr>
+                <tr>
+                    <td>131</td>
+                    <td><a href="https://mazebert.com/player/16781/">Pobster</a></td>
+                    <td class="right">241</td>
+                </tr>
+                <tr>
+                    <td>132</td>
+                    <td><a href="https://mazebert.com/player/8655/">adam</a></td>
+                    <td class="right">226</td>
+                </tr>
+                <tr>
+                    <td>133</td>
+                    <td><a href="https://mazebert.com/player/4350/">rrrgfd</a></td>
+                    <td class="right">222</td>
+                </tr>
+                <tr>
+                    <td>134</td>
+                    <td><a href="https://mazebert.com/player/17240/">Blacky</a></td>
+                    <td class="right">221</td>
+                </tr>
+                <tr>
+                    <td>135</td>
+                    <td><a href="https://mazebert.com/player/15435/">yumfoo</a></td>
+                    <td class="right">195</td>
+                </tr>
+                <tr>
+                    <td>136</td>
+                    <td><a href="https://mazebert.com/player/11655/">gri</a></td>
+                    <td class="right">164</td>
+                </tr>
+                <tr>
+                    <td>137</td>
+                    <td><a href="https://mazebert.com/player/18106/">Mateus</a></td>
+                    <td class="right">145</td>
+                </tr>
+                <tr>
+                    <td>138</td>
+                    <td><a href="https://mazebert.com/player/16849/">da</a></td>
+                    <td class="right">108</td>
+                </tr>
+                <tr>
+                    <td>139</td>
+                    <td><a href="https://mazebert.com/player/12015/">Lanthasa </a></td>
+                    <td class="right">94</td>
+                </tr>
+                <tr>
+                    <td>140</td>
+                    <td><a href="https://mazebert.com/player/17735/">Zergling</a></td>
+                    <td class="right">64</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+        </main>
+
+        <footer class="footer">
+            <div class="content has-text-centered">
+                <p>
+                    <strong>Mazebert TD</strong> by Andreas Hager.<br/>
+                    <a href="https://mazebert.com/privacy-policy/">Privacy</a>. <a href="https://mazebert.com/legal-notice/">Legal notice</a>.
+                </p>
+            </div>
+        </footer>
+
+        <script>
+            $(document).ready(function() {
+                $('.nav-mobile').click(function(){
+                    $('#nav-icon').toggleClass('open');
+                    $('.nav-menu').toggleClass('open');
+                });
+            });
+        </script>
+
+    </body>
+</html>
+
